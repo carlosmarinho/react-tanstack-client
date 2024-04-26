@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const PFClient = z.object({
-  id: z.number(),
+  id: z.number().optional(),
   tipo: z.literal("PF"),
   nome: z.string(),
   cpf: z.string(),
@@ -13,7 +13,7 @@ export const PFClient = z.object({
 });
 
 export const PJClient = z.object({
-  id: z.number(),
+  id: z.number().optional(),
   tipo: z.literal("PJ"),
   nome: z.null(),
   cpf: z.null(),

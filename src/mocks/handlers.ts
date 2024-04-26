@@ -40,4 +40,20 @@ export const handlers = [
 
     return HttpResponse.json(clients);
   }),
+  http.post("/api/clients", async ({ request }) => {
+    const client = await request.json();
+    console.log("\n\n***\n client: ", client, "\n***\n");
+    return new HttpResponse(null, { status: 201 });
+  }),
+  http.put("/api/clients/:id", async ({ request, params }) => {
+    const { id } = params;
+    const client = await request.json();
+    console.log("\n\n***\n client: ", client, id, "\n***\n");
+    return new HttpResponse(null, { status: 204 });
+  }),
+  http.delete("/api/clients/:id", async ({ params }) => {
+    const { id } = params;
+    console.log("\n\n***\n client: ", id, "\n***\n");
+    return new HttpResponse(null, { status: 202 });
+  }),
 ];
