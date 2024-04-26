@@ -2,14 +2,14 @@ import { useCallback, useEffect, useState } from "react";
 
 interface Client {
   id: number;
-  name: string;
+  nome: string;
 }
 
 function App() {
   const [clients, setClients] = useState<Client[]>([]);
 
   const fetchClients = useCallback(async () => {
-    const response = await fetch("/api/getclients");
+    const response = await fetch("/api/clients");
     const data: Client[] = await response.json();
     setClients(data);
   }, []);
@@ -22,9 +22,9 @@ function App() {
 
   return (
     <div>
-      <h1>Client app</h1>
+      <h1>Client app!</h1>
       {clients?.map((client) => (
-        <div key={client.id}>{client.name}</div>
+        <div key={client.id}>{client.nome} id</div>
       ))}
     </div>
   );

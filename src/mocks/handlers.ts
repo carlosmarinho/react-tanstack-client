@@ -1,9 +1,9 @@
 import { HttpResponse, http } from "msw";
+import { ClientSchema } from "../types";
 
 export const handlers = [
-  http.get("/api/getclients", () => {
-    console.log("\n\n***\n era p ter retornado o json: ", "\n***\n");
-    return HttpResponse.json([
+  http.get("/api/clients", () => {
+    const clients = [
       {
         id: 1,
         tipo: "PF",
@@ -26,18 +26,18 @@ export const handlers = [
         email: "contato@empresasilva.com.br",
         telefone: "(11) 91234-5678",
       },
-    ]);
+    ];
+
+    // Validate clients and checking if our backend data is correct
+    clients.forEach((client) => {
+      try {
+        ClientSchema.parse(client);
+      } catch (error) {
+        const zodError = error as Error;
+        console.error(`Validation error for client ${client.id}:`, zodError);
+      }
+    });
+
+    return HttpResponse.json(clients);
   }),
 ];
-
-// export const handlers = [
-//   rest.get("/api/getClients", (_request, response, context) => {
-//     return response(
-//       context.status(200),
-//       context.json([
-//         { id: 1, name: "Carlos Marinho" },
-//         { id: 2, name: "Eloah Silva" },
-//       ])
-//     );
-//   }),
-// ];
