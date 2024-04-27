@@ -25,8 +25,6 @@ function ListClient() {
         method: "DELETE",
       });
 
-      console.log("\n\n***\n response: ", response, "\n***\n");
-
       if (!response.ok) {
         // throw new Error(`HTTP error! status: ${response.status}`);
       }

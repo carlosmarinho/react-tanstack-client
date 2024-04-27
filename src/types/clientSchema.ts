@@ -1,27 +1,34 @@
 import { z } from "zod";
 
-export const PFClient = z.object({
+const Tipo = z.nativeEnum({
+  PF: "PF",
+  PJ: "PJ",
+});
+
+const BaseClient = z.object({
   id: z.number().optional(),
-  tipo: z.literal("PF"),
-  nome: z.string(),
-  cpf: z.string(),
-  nomeFantasia: z.null(),
-  razaoSocial: z.null(),
-  cnpj: z.null(),
+  tipo: Tipo,
   email: z.string(),
   telefone: z.string(),
 });
 
-export const PJClient = z.object({
-  id: z.number().optional(),
-  tipo: z.literal("PJ"),
-  nome: z.null(),
-  cpf: z.null(),
-  nomeFantasia: z.string(),
-  razaoSocial: z.string(),
-  cnpj: z.string(),
-  email: z.string(),
-  telefone: z.string(),
-});
+export const PFClient = BaseClient.merge(
+  z.object({
+    tipo: z.literal("PF"),
+    nome: z.string(),
+    cpf: z.string(),
+  })
+);
+
+export const PJClient = BaseClient.merge(
+  z.object({
+    tipo: z.literal("PJ"),
+    nomeFantasia: z.string(),
+    razaoSocial: z.string(),
+    cnpj: z.string(),
+  })
+);
 
 export const ClientSchema = z.union([PFClient, PJClient]);
+
+export type TypeClient = z.infer<typeof ClientSchema>;

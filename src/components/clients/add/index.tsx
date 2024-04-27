@@ -64,27 +64,29 @@ const AddClient = () => {
           <option value="PJ">PJ</option>
         </select>
       </div>
-      <div>
-        <label htmlFor="nome">Name:</label>
-        <input
-          name="nome"
-          type="text"
-          id="nome"
-          value={formState.nome}
-          onChange={handleChange}
-        />
-      </div>
       {formState.tipo === "PF" && (
-        <div>
-          <label htmlFor="cpf">CPF:</label>
-          <input
-            name="cpf"
-            type="text"
-            id="cpf"
-            value={formState.cpf || ""}
-            onChange={handleChange}
-          />
-        </div>
+        <>
+          <div>
+            <label htmlFor="nome">Name:</label>
+            <input
+              name="nome"
+              type="text"
+              id="nome"
+              value={formState.nome}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="cpf">CPF:</label>
+            <input
+              name="cpf"
+              type="text"
+              id="cpf"
+              value={formState.cpf || ""}
+              onChange={handleChange}
+            />
+          </div>
+        </>
       )}
       {formState.tipo === "PJ" && (
         <>
