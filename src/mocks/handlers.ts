@@ -1,36 +1,25 @@
 import { HttpResponse, http } from "msw";
 import { ClientSchema } from "../types";
-import { ClientMap } from "./clientsMap";
 import { TypeClient } from "../types/clientSchema";
-import { getDefaultClients } from "./defaultClients";
-
-const clientMap = new ClientMap();
+import {
+  clientMap,
+  clientMapHasId,
+  getClientsFromSessionStorage,
+  initializeSessionStorage,
+} from "../utils";
 
 export const handlers = [
   http.get("/api/clients", () => {
-    const storage = sessionStorage.getItem("clients");
-    let clients: TypeClient[] = [];
-
-    if (storage) {
-      clients = JSON.parse(storage);
-    } else {
-      clients = getDefaultClients();
-
-      // Validate clients and checking if our backend data is correct
-      clients.forEach((client) => {
-        try {
-          ClientSchema.parse(client);
-          clientMap.set(client.id!.toString(), client);
-        } catch (error) {
-          const zodError = error as Error;
-          console.error(`Validation error for client ${client.id}:`, zodError);
-        }
-      });
-    }
+    const clients = getClientsFromSessionStorage();
     return HttpResponse.json(clients);
   }),
 
   http.post("/api/clients", async ({ request }) => {
+    //This will assure to have the default clients in the session storage before creating a new one
+    if (!sessionStorage.getItem("clients")) {
+      initializeSessionStorage();
+    }
+
     const client = (await request.json()) as TypeClient;
     try {
       ClientSchema.parse(client);
@@ -38,49 +27,52 @@ export const handlers = [
         id: clientMap.size + 1,
         ...client,
       });
-      sessionStorage.setItem(
-        "clients",
-        JSON.stringify(Array.from(clientMap.values()))
-      );
     } catch (error) {
       console.error("Invalid client:", error);
+      /**@todo returning this is not working, try to find possible solution */
+      // return new HttpResponse("Invalid client data", { status: 400 });
     }
     return new HttpResponse(null, { status: 201 });
   }),
 
   http.put("/api/clients/:id", async ({ request, params }) => {
     const { id } = params;
+
+    // I need to add this validation cause id in params can also be an array and typescrpt is complaning
     if (typeof id !== "string") {
       console.error("Invalid id:", id);
-      return new HttpResponse(null, { status: 400 });
+      return new HttpResponse("Invalid ID", { status: 400 });
+    }
+
+    if (!clientMapHasId(id)) {
+      return new HttpResponse("Client not found", { status: 404 });
     }
 
     const client = (await request.json()) as TypeClient;
     try {
       ClientSchema.parse(client);
       clientMap.set(id, client);
-      sessionStorage.setItem(
-        "clients",
-        JSON.stringify(Array.from(clientMap.values()))
-      );
     } catch (error) {
       console.error("Invalid client:", error);
+      /**@todo returning this is not working, try to find possible solution, for this reason I'll keep only the console.log */
+      // return new HttpResponse('Invalid client data', { status: 400 });
     }
     return new HttpResponse(null, { status: 204 });
   }),
 
-  http.delete("/api/clients/:id", async ({ params }) => {
+  http.delete("/api/clients/:id", ({ params }) => {
     const { id } = params;
+    // I need to add this validation cause id in params can also be an array and typescrpt is complaning
     if (typeof id !== "string") {
       console.error("Invalid id:", id);
-      return new HttpResponse(null, { status: 400 });
+      return new HttpResponse("Invalid ID", { status: 400 });
+    }
+
+    if (!clientMapHasId(id)) {
+      return new HttpResponse("Client not found", { status: 404 });
     }
 
     clientMap.delete(id);
-    sessionStorage.setItem(
-      "clients",
-      JSON.stringify(Array.from(clientMap.values()))
-    );
-    return new HttpResponse(null, { status: 202 });
+    return new HttpResponse(null, { status: 204 });
   }),
 ];

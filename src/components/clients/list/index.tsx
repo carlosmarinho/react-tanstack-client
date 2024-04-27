@@ -21,7 +21,7 @@ function ListClient() {
 
   async function handleDelete(id: number) {
     try {
-      const response = await fetch(`/api/clients/${id}`, {
+      const response = await fetch(`/api/clients/20`, {
         method: "DELETE",
       });
 
