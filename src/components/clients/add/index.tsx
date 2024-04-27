@@ -31,8 +31,8 @@ const AddClient = () => {
     event.preventDefault();
     try {
       ClientSchema.parse(formState);
-      const response = await fetch("/api/clients/1", {
-        method: "PUT",
+      const response = await fetch("/api/clients/", {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },

@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
-// import { worker } from "./mocks/browser"; // Import the worker from "./mocks/browser" instead of using require
 
 async function enableMocking() {
   if (import.meta.env.MODE !== "development") {
