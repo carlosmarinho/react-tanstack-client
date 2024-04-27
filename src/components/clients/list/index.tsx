@@ -1,4 +1,6 @@
-import { useCallback, useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useCallback } from "react";
+import { TypeClient } from "../../../types/clientSchema";
 
 interface Client {
   id: number;
@@ -7,17 +9,21 @@ interface Client {
 }
 
 function ListClient() {
-  const [clients, setClients] = useState<Client[]>([]);
+  //   const [clients, setClients] = useState<Client[]>([]);
 
   const fetchClients = useCallback(async () => {
     const response = await fetch("/api/clients");
-    const data: Client[] = await response.json();
-    setClients(data);
+    return (await response.json()) as TypeClient[];
   }, []);
 
-  useEffect(() => {
-    fetchClients();
-  }, [fetchClients]);
+  //   useEffect(() => {
+  //     fetchClients();
+  //   }, [fetchClients]);
+
+  const { data: clients, isLoading } = useQuery({
+    queryKey: ["clients"],
+    queryFn: fetchClients,
+  });
 
   async function handleDelete(id: number) {
     try {
@@ -36,17 +42,15 @@ function ListClient() {
   }
 
   return (
-    <div>
-      <h1>Client app!</h1>
-      <ul>
-        {clients?.map((client) => (
-          <li key={client.id}>
-            {client.nome || client.nomeFantasia} <button>Editar</button>{" "}
-            <button onClick={() => handleDelete(client.id)}>Deletar</button>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <ul>
+      {clients?.map((client) => (
+        <li key={client.id}>
+          {client.tipo === "PF" ? client.nome : client.nomeFantasia}{" "}
+          <button>Editar</button>{" "}
+          <button onClick={() => handleDelete(client.id!)}>Deletar</button>
+        </li>
+      ))}
+    </ul>
   );
 }
 

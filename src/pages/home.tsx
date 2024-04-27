@@ -7,6 +7,7 @@ function HomePage() {
       <Link to="/add-client">
         <button>Add Client</button>
       </Link>
+      <h1>Client app!</h1>
       <ListClient />
     </div>
   );
