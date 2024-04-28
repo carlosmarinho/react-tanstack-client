@@ -1,5 +1,15 @@
 import { useForm } from "react-hook-form";
 import { ClientSchema } from "../../../types";
+import {
+  TextField,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Button,
+  FormHelperText,
+  Box,
+} from "@mui/material";
 
 const AddClient = () => {
   const {
@@ -34,59 +44,113 @@ const AddClient = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <label htmlFor="tipo">Type:</label>
-        <select {...register("tipo", { required: true })}>
-          <option value="">Select a type</option>
-          <option value="PF">PF</option>
-          <option value="PJ">PJ</option>
-        </select>
-        {errors.tipo && <p>This field is required</p>}
-      </div>
+      <Box marginBottom={2}>
+        <FormControl error={!!errors.tipo} fullWidth>
+          <InputLabel id="tipo-label">Tipo</InputLabel>
+          <Select
+            labelId="tipo-label"
+            {...register("tipo", { required: true })}
+          >
+            <MenuItem value="">Selecione o tipo</MenuItem>
+            <MenuItem value="PF">PF</MenuItem>
+            <MenuItem value="PJ">PJ</MenuItem>
+          </Select>
+          {errors.tipo && (
+            <FormHelperText>Este campo é obrigatório</FormHelperText>
+          )}
+        </FormControl>
+      </Box>
+
       {tipo === "PF" && (
         <>
-          <div>
-            <label htmlFor="nome">Name:</label>
-            <input {...register("nome", { required: true })} />
-            {errors.nome && <p>This field is required</p>}
-          </div>
-          <div>
-            <label htmlFor="cpf">CPF:</label>
-            <input {...register("cpf", { required: true })} />
-            {errors.cpf && <p>This field is required</p>}
-          </div>
+          <Box marginBottom={2}>
+            <TextField
+              label="Nome"
+              {...register("nome", { required: true })}
+              error={!!errors.nome}
+              helperText={errors.nome && "Este campo é obrigatório"}
+              fullWidth
+            />
+          </Box>
+          <Box marginBottom={2}>
+            <TextField
+              label="CPF"
+              {...register("cpf", { required: true })}
+              error={!!errors.cpf}
+              helperText={errors.cpf && "Este campo é obrigatório"}
+              fullWidth
+            />
+          </Box>
         </>
       )}
+
       {tipo === "PJ" && (
         <>
-          <div>
-            <label htmlFor="cnpj">CNPJ:</label>
-            <input {...register("cnpj", { required: true })} />
-            {errors.cnpj && <p>This field is required</p>}
-          </div>
-          <div>
-            <label htmlFor="nomeFantasia">Fantasy Name:</label>
-            <input {...register("nomeFantasia", { required: true })} />
-            {errors.nomeFantasia && <p>This field is required</p>}
-          </div>
-          <div>
-            <label htmlFor="razaoSocial">Social Reason:</label>
-            <input {...register("razaoSocial", { required: true })} />
-            {errors.razaoSocial && <p>This field is required</p>}
-          </div>
+          <Box marginBottom={2}>
+            <TextField
+              label="CNPJ"
+              {...register("cnpj", { required: true })}
+              error={!!errors.cnpj}
+              helperText={errors.cnpj && "Este campo é obrigatório"}
+              fullWidth
+            />
+          </Box>
+          <Box marginBottom={2}>
+            <TextField
+              label="Nome Fantasia"
+              {...register("nomeFantasia", { required: true })}
+              error={!!errors.nomeFantasia}
+              helperText={errors.nomeFantasia && "Este campo é obrigatório"}
+              fullWidth
+            />
+          </Box>
+          <Box marginBottom={2}>
+            <TextField
+              label="Razão Social"
+              {...register("razaoSocial", { required: true })}
+              error={!!errors.razaoSocial}
+              helperText={errors.razaoSocial && "Este campo é obrigatório"}
+              fullWidth
+            />
+          </Box>
         </>
       )}
-      <div>
-        <label htmlFor="email">Email:</label>
-        <input {...register("email", { required: true })} />
-        {errors.email && <p>This field is required</p>}
-      </div>
-      <div>
-        <label htmlFor="telefone">Phone:</label>
-        <input {...register("telefone", { required: true })} />
-        {errors.telefone && <p>This field is required</p>}
-      </div>
-      <button type="submit">Submit</button>
+
+      <Box marginBottom={2}>
+        <TextField
+          label="Email"
+          {...register("email", { required: true })}
+          error={!!errors.email}
+          helperText={errors.email && "Este campo é obrigatório"}
+          fullWidth
+        />
+      </Box>
+
+      <Box marginBottom={2}>
+        <TextField
+          sx={{ width: "18%", marginRight: "10px" }}
+          label="DDD"
+          {...register("ddd", { required: true, pattern: /^[0-9]{2}$/ })}
+          error={!!errors.ddd}
+          helperText={
+            errors.ddd &&
+            "Este campo é obrigatório e deve ter exatamente 2 dígitos"
+          }
+          inputProps={{ maxLength: "2" }}
+        />
+        <TextField
+          sx={{ width: "80%" }}
+          label="Telefone"
+          {...register("telefone", { required: true })}
+          error={!!errors.telefone}
+          helperText={errors.telefone && "Este campo é obrigatório"}
+          inputProps={{ maxLength: "9" }}
+        />
+      </Box>
+
+      <Button type="submit" variant="contained">
+        Enviar
+      </Button>
     </form>
   );
 };
