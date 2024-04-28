@@ -1,4 +1,5 @@
-import { useForm } from "react-hook-form";
+import { useForm, FieldError } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { ClientSchema } from "../../../types";
 import {
   TextField,
@@ -9,15 +10,24 @@ import {
   Button,
   FormHelperText,
   Box,
+  Alert,
 } from "@mui/material";
+import { useState } from "react";
+
+const formOptions = {
+  resolver: zodResolver(ClientSchema),
+};
 
 const AddClient = () => {
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
+
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm();
+  } = useForm(formOptions);
 
   const onSubmit = async (data: unknown) => {
     try {
@@ -34,9 +44,9 @@ const AddClient = () => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      console.log("Form submitted successfully");
+      setSubmitSuccess(true);
     } catch (error) {
-      console.error("Validation error:", error);
+      setSubmitError(true);
     }
   };
 
@@ -44,6 +54,14 @@ const AddClient = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      {submitSuccess && (
+        <Alert severity="success">Cliente cadastrado com sucesso!</Alert>
+      )}
+      {submitError && (
+        <Alert severity="error">
+          Um erro ocorreu ao tentar cadastrar o cliente!.
+        </Alert>
+      )}
       <Box marginBottom={2}>
         <FormControl error={!!errors.tipo} fullWidth>
           <InputLabel id="tipo-label">Tipo</InputLabel>
@@ -68,18 +86,26 @@ const AddClient = () => {
               label="Nome"
               {...register("nome", { required: true })}
               error={!!errors.nome}
-              helperText={errors.nome && "Este campo é obrigatório"}
+              helperText={(errors.nome as FieldError)?.message}
               fullWidth
             />
           </Box>
+          {/**
+           * @todo add mask to this field maybe using react-input-mask to
+           * allow separation between numbers
+           */}
           <Box marginBottom={2}>
             <TextField
               label="CPF"
               {...register("cpf", { required: true })}
               error={!!errors.cpf}
-              helperText={errors.cpf && "Este campo é obrigatório"}
+              helperText={(errors.cpf as FieldError)?.message}
               fullWidth
+              inputProps={{ maxLength: "11" }}
             />
+            {!errors.cpf && (
+              <FormHelperText>Este campo aceita apenas números</FormHelperText>
+            )}
           </Box>
         </>
       )}
@@ -91,16 +117,20 @@ const AddClient = () => {
               label="CNPJ"
               {...register("cnpj", { required: true })}
               error={!!errors.cnpj}
-              helperText={errors.cnpj && "Este campo é obrigatório"}
+              helperText={(errors.cnpj as FieldError)?.message}
               fullWidth
+              inputProps={{ maxLength: "14" }}
             />
+            {!errors.cnpj && (
+              <FormHelperText>Este campo aceita apenas números!</FormHelperText>
+            )}
           </Box>
           <Box marginBottom={2}>
             <TextField
               label="Nome Fantasia"
               {...register("nomeFantasia", { required: true })}
               error={!!errors.nomeFantasia}
-              helperText={errors.nomeFantasia && "Este campo é obrigatório"}
+              helperText={(errors.nomeFantasia as FieldError)?.message}
               fullWidth
             />
           </Box>
@@ -109,7 +139,7 @@ const AddClient = () => {
               label="Razão Social"
               {...register("razaoSocial", { required: true })}
               error={!!errors.razaoSocial}
-              helperText={errors.razaoSocial && "Este campo é obrigatório"}
+              helperText={(errors.razaoSocial as FieldError)?.message}
               fullWidth
             />
           </Box>
@@ -122,6 +152,7 @@ const AddClient = () => {
           {...register("email", { required: true })}
           error={!!errors.email}
           helperText={errors.email && "Este campo é obrigatório"}
+          // helperText={errors.email?.message}
           fullWidth
         />
       </Box>
@@ -132,10 +163,7 @@ const AddClient = () => {
           label="DDD"
           {...register("ddd", { required: true, pattern: /^[0-9]{2}$/ })}
           error={!!errors.ddd}
-          helperText={
-            errors.ddd &&
-            "Este campo é obrigatório e deve ter exatamente 2 dígitos"
-          }
+          helperText={(errors.ddd as FieldError)?.message}
           inputProps={{ maxLength: "2" }}
         />
         <TextField
@@ -143,9 +171,15 @@ const AddClient = () => {
           label="Telefone"
           {...register("telefone", { required: true })}
           error={!!errors.telefone}
-          helperText={errors.telefone && "Este campo é obrigatório"}
+          helperText={
+            errors.telefone &&
+            "Campo Telefone é obrigatório e deve começar com o número 9"
+          }
           inputProps={{ maxLength: "9" }}
         />
+        {!errors.telefone && (
+          <FormHelperText>DDD e Telefone aceita apenas números</FormHelperText>
+        )}
       </Box>
 
       <Button type="submit" variant="contained">
