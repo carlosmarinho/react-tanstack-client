@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Header } from "./Header/";
+import { Header } from "./header";
 import { Card, CardContent, Divider, styled } from "@mui/material";
 
 interface LayoutProps {

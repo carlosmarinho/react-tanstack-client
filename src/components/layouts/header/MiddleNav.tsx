@@ -11,7 +11,7 @@ function MiddleNav() {
   return (
     <Nav>
       <NavLinkCustom to="/list-client">Listar Clientes</NavLinkCustom>
-      <NavLinkCustom to="/add-client">Adicionar Client</NavLinkCustom>
+      <NavLinkCustom to="/add-client">Adicionar Cliente</NavLinkCustom>
     </Nav>
   );
 }

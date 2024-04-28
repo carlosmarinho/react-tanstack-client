@@ -69,4 +69,5 @@ export function clientMapHasId(id: string) {
     console.error("Client not found:", id);
     return false;
   }
+  return true;
 }

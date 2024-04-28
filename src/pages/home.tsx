@@ -1,4 +1,4 @@
-import { Layout } from "../components/Layouts";
+import { Layout } from "../components/layouts";
 import ListClient from "../components/clients/list";
 
 function HomePage() {
