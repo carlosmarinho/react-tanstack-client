@@ -1,42 +1,23 @@
-import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import { ClientSchema } from "../../../types";
 
 const AddClient = () => {
-  const [formState, setFormState] = useState({
-    tipo: "",
-    nome: "",
-    cpf: null,
-    nomeFantasia: null,
-    razaoSocial: null,
-    cnpj: null,
-    email: "",
-    telefone: "",
-  });
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFormState({
-      ...formState,
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setFormState({
-      ...formState,
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const onSubmit = async (data: unknown) => {
     try {
-      ClientSchema.parse(formState);
+      ClientSchema.parse(data);
       const response = await fetch("/api/clients/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formState),
+        body: JSON.stringify(data),
       });
 
       if (!response.ok) {
@@ -49,99 +30,61 @@ const AddClient = () => {
     }
   };
 
+  const tipo = watch("tipo");
+
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div>
         <label htmlFor="tipo">Type:</label>
-        <select
-          name="tipo"
-          id="tipo"
-          value={formState.tipo}
-          onChange={handleSelectChange}
-        >
+        <select {...register("tipo", { required: true })}>
           <option value="">Select a type</option>
           <option value="PF">PF</option>
           <option value="PJ">PJ</option>
         </select>
+        {errors.tipo && <p>This field is required</p>}
       </div>
-      {formState.tipo === "PF" && (
+      {tipo === "PF" && (
         <>
           <div>
             <label htmlFor="nome">Name:</label>
-            <input
-              name="nome"
-              type="text"
-              id="nome"
-              value={formState.nome}
-              onChange={handleChange}
-            />
+            <input {...register("nome", { required: true })} />
+            {errors.nome && <p>This field is required</p>}
           </div>
           <div>
             <label htmlFor="cpf">CPF:</label>
-            <input
-              name="cpf"
-              type="text"
-              id="cpf"
-              value={formState.cpf || ""}
-              onChange={handleChange}
-            />
+            <input {...register("cpf", { required: true })} />
+            {errors.cpf && <p>This field is required</p>}
           </div>
         </>
       )}
-      {formState.tipo === "PJ" && (
+      {tipo === "PJ" && (
         <>
           <div>
             <label htmlFor="cnpj">CNPJ:</label>
-            <input
-              name="cnpj"
-              type="text"
-              id="cnpj"
-              value={formState.cnpj || ""}
-              onChange={handleChange}
-            />
+            <input {...register("cnpj", { required: true })} />
+            {errors.cnpj && <p>This field is required</p>}
           </div>
           <div>
             <label htmlFor="nomeFantasia">Fantasy Name:</label>
-            <input
-              name="nomeFantasia"
-              type="text"
-              id="nomeFantasia"
-              value={formState.nomeFantasia || ""}
-              onChange={handleChange}
-            />
+            <input {...register("nomeFantasia", { required: true })} />
+            {errors.nomeFantasia && <p>This field is required</p>}
           </div>
           <div>
             <label htmlFor="razaoSocial">Social Reason:</label>
-            <input
-              name="razaoSocial"
-              type="text"
-              id="razaoSocial"
-              value={formState.razaoSocial || ""}
-              onChange={handleChange}
-            />
+            <input {...register("razaoSocial", { required: true })} />
+            {errors.razaoSocial && <p>This field is required</p>}
           </div>
         </>
       )}
-
       <div>
         <label htmlFor="email">Email:</label>
-        <input
-          name="email"
-          type="email"
-          id="email"
-          value={formState.email}
-          onChange={handleChange}
-        />
+        <input {...register("email", { required: true })} />
+        {errors.email && <p>This field is required</p>}
       </div>
       <div>
         <label htmlFor="telefone">Phone:</label>
-        <input
-          name="telefone"
-          type="text"
-          id="telefone"
-          value={formState.telefone}
-          onChange={handleChange}
-        />
+        <input {...register("telefone", { required: true })} />
+        {errors.telefone && <p>This field is required</p>}
       </div>
       <button type="submit">Submit</button>
     </form>
