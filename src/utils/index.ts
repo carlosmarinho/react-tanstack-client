@@ -1,30 +1,11 @@
+import { mockClients } from "../mocks/clients";
 import { ClientMap } from "../mocks/clientsMap";
 import { ClientSchema, TypeClient } from "../types/clientSchema";
 
 export const clientMap = new ClientMap();
 
 export function getDefaultClients(): TypeClient[] {
-  return [
-    {
-      id: 1,
-      tipo: "PF",
-      nome: "Carlos Marinho",
-      cpf: "123.456.789-00",
-      email: "carlos@example.com",
-      ddd: "21",
-      telefone: "91234-5678",
-    },
-    {
-      id: 2,
-      tipo: "PJ",
-      nomeFantasia: "Empresa Silva",
-      razaoSocial: "Silva Industria e Comercio Ltda",
-      cnpj: "12.345.678/0001-90",
-      email: "contato@empresasilva.com.br",
-      ddd: "11",
-      telefone: "91234-5678",
-    },
-  ];
+  return mockClients;
 }
 
 export function initializeSessionStorage(): TypeClient[] {
@@ -50,15 +31,8 @@ export function getClientsFromSessionStorage(): TypeClient[] {
   const storage = sessionStorage.getItem("clients");
   let clients: TypeClient[] = [];
 
-  console.log("\n\n***\n storage: ", storage, "\n***\n");
-
   if (storage) {
     clients = JSON.parse(storage);
-    console.log(
-      "\n\n***\n it should return clients from here: ",
-      clients,
-      "\n***\n"
-    );
   } else {
     clients = initializeSessionStorage();
   }
