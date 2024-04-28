@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useClient } from "../../../hooks/clientHooks";
-import ConfirmDeleteDialog from "./ConfirmDialog";
+import ConfirmDeleteDialog from "./ConfirmDeleteDialog";
 import { useState } from "react";
 
 function ListClient() {

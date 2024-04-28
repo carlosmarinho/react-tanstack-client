@@ -37,16 +37,15 @@ export default function ConfirmDeleteDialog({
           },
         }}
       >
-        <DialogTitle>Subscribe</DialogTitle>
+        <DialogTitle>Excluir Cliente id: {`${idToDelete}`}</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            To subscribe to this website, please enter your email address here.
-            We will send updates occasionally.
+            Tem certeza que quer excluir o cliente com o id {idToDelete}?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button type="submit">Subscribe</Button>
+          <Button onClick={handleClose}>Cancelar</Button>
+          <Button type="submit">Confirmar</Button>
         </DialogActions>
       </Dialog>
     </>

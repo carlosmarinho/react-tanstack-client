@@ -27,6 +27,7 @@ const AddClient = () => {
     handleSubmit,
     watch,
     formState: { errors },
+    reset,
   } = useForm(formOptions);
 
   const onSubmit = async (data: unknown) => {
@@ -45,6 +46,7 @@ const AddClient = () => {
       }
 
       setSubmitSuccess(true);
+      reset();
     } catch (error) {
       setSubmitError(true);
     }
