@@ -46,4 +46,6 @@ export const PJClient = BaseClient.merge(
 
 export const ClientSchema = z.union([PFClient, PJClient]);
 
+export type TypePF = z.infer<typeof PFClient>;
+export type TypePJ = z.infer<typeof PJClient>;
 export type TypeClient = z.infer<typeof ClientSchema>;

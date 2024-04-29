@@ -1,4 +1,4 @@
-import { Alert, Box, List, Typography } from "@mui/material";
+import { Alert, Box, CircularProgress, List, Typography } from "@mui/material";
 import { useClient } from "../../../hooks/clientHooks";
 import ConfirmDeleteDialog from "./ConfirmDeleteDialog";
 import { useState } from "react";
@@ -15,7 +15,11 @@ function ListClient() {
   }
 
   if (isLoading) {
-    return <Box>Loading...</Box>;
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center">
+        <CircularProgress />
+      </Box>
+    );
   }
 
   console.log("clients no map", clients);

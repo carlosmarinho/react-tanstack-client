@@ -1,18 +1,26 @@
 import { Delete, Edit } from "@mui/icons-material";
 import { IconButton, ListItem, ListItemText } from "@mui/material";
 import { Link } from "react-router-dom";
-import { TypeClient } from "../../../types/clientSchema";
+import { TypeClient, TypePF, TypePJ } from "../../../types/clientSchema";
 
 interface ClientListItemProps {
   client: TypeClient;
   openDeleteModal: (id: number) => void;
 }
 
+const isTypePF = (client: TypeClient): client is TypePF => {
+  return client.tipo === "PF";
+};
+
 const ClientListItem: React.FC<ClientListItemProps> = ({
   client,
   openDeleteModal,
 }) => {
-  const { id, tipo } = client;
+  const { id } = client;
+  const primaryText = isTypePF(client)
+    ? client.nome
+    : (client as TypePJ).nomeFantasia;
+
   return (
     <ListItem
       sx={{ borderBottom: "1px solid #ccc" }}
@@ -20,13 +28,13 @@ const ClientListItem: React.FC<ClientListItemProps> = ({
       secondaryAction={
         <>
           <Link to={`/edit-client/${id}`}>
-            <IconButton edge="end" aria-label="delete">
+            <IconButton edge="end" aria-label={`Edit client ${id}`}>
               <Edit />
             </IconButton>
           </Link>
           <IconButton
             edge="end"
-            aria-label="delete"
+            aria-label={`Delete client ${id}`}
             onClick={() => openDeleteModal(id!)}
           >
             <Delete />
@@ -34,9 +42,7 @@ const ClientListItem: React.FC<ClientListItemProps> = ({
         </>
       }
     >
-      <ListItemText
-        primary={tipo === "PF" ? client.nome : client.nomeFantasia}
-      />
+      <ListItemText primary={primaryText} />
     </ListItem>
   );
 };
