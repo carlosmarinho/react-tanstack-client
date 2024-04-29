@@ -20,7 +20,8 @@ const formOptions = {
 };
 
 const AddClient = () => {
-  const { onSubmit, submitSuccess, submitError, isLoading } = useFormSubmit();
+  const { addClient, submitSuccess, submitError, isSubmitting } =
+    useFormSubmit();
 
   const {
     register,
@@ -34,10 +35,13 @@ const AddClient = () => {
     if (submitSuccess) {
       reset();
     }
-
     // I really don't wanna to add reset to the dependency array, because it's reference doesn't change
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [submitSuccess]);
+
+  const onSubmit = (data: unknown) => {
+    addClient(data);
+  };
 
   const tipo = watch("tipo");
 
@@ -171,8 +175,8 @@ const AddClient = () => {
         )}
       </Box>
 
-      <Button type="submit" disabled={isLoading} variant="contained">
-        {isLoading ? "Loading..." : "Enviar"}
+      <Button type="submit" disabled={isSubmitting} variant="contained">
+        {isSubmitting ? "Loading..." : "Enviar"}
       </Button>
     </form>
   );

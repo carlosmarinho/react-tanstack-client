@@ -1,12 +1,10 @@
 // useFormSubmit.ts
-import { useState } from "react";
+import { useCallback } from "react";
 import { ClientSchema } from "../types";
+import { useMutation } from "@tanstack/react-query";
 
 const useFormSubmit = () => {
-  const [submitSuccess, setSubmitSuccess] = useState(false);
-  const [submitError, setSubmitError] = useState(false);
-
-  const onSubmit = async (data: unknown) => {
+  const submitClient = useCallback(async (data: unknown) => {
     try {
       ClientSchema.parse(data);
       const response = await fetch("/api/clients/", {
@@ -20,14 +18,21 @@ const useFormSubmit = () => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-
-      setSubmitSuccess(true);
     } catch (error) {
-      setSubmitError(true);
+      console.error("Validation error:", error);
     }
-  };
+  }, []);
 
-  return { onSubmit, submitSuccess, submitError, isLoading: false };
+  const {
+    mutate: addClient,
+    error: submitError,
+    isSuccess: submitSuccess,
+    isPending: isSubmitting,
+  } = useMutation({
+    mutationFn: submitClient,
+  });
+
+  return { addClient, submitSuccess, submitError, isSubmitting };
 };
 
 export default useFormSubmit;
