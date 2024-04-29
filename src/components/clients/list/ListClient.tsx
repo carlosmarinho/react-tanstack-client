@@ -1,17 +1,8 @@
-import { Delete, Edit } from "@mui/icons-material";
-import {
-  Alert,
-  Box,
-  IconButton,
-  List,
-  ListItem,
-  ListItemText,
-  Typography,
-} from "@mui/material";
-import { Link } from "react-router-dom";
+import { Alert, Box, List, Typography } from "@mui/material";
 import { useClient } from "../../../hooks/clientHooks";
 import ConfirmDeleteDialog from "./ConfirmDeleteDialog";
 import { useState } from "react";
+import ClientListItem from "./ClientListItem";
 
 function ListClient() {
   const { clients, isLoading, removeClient, error, deleteError } = useClient();
@@ -26,6 +17,8 @@ function ListClient() {
   if (isLoading) {
     return <Box>Loading...</Box>;
   }
+
+  console.log("clients no map", clients);
 
   return (
     <>
@@ -43,32 +36,11 @@ function ListClient() {
       ) : (
         <List dense>
           {clients?.map((client) => (
-            <ListItem
-              sx={{ borderBottom: "1px solid #ccc" }}
+            <ClientListItem
               key={client.id}
-              secondaryAction={
-                <>
-                  <Link to={`/edit-client/${client.id}`}>
-                    <IconButton edge="end" aria-label="delete">
-                      <Edit />
-                    </IconButton>
-                  </Link>
-                  <IconButton
-                    edge="end"
-                    aria-label="delete"
-                    onClick={() => openDeleteModal(client.id!)}
-                  >
-                    <Delete />
-                  </IconButton>
-                </>
-              }
-            >
-              <ListItemText
-                primary={
-                  client.tipo === "PF" ? client.nome : client.nomeFantasia
-                }
-              />
-            </ListItem>
+              client={client}
+              openDeleteModal={openDeleteModal}
+            />
           ))}
         </List>
       )}

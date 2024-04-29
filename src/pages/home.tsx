@@ -1,5 +1,5 @@
+import ListClient from "../components/clients/list/ListClient";
 import { Layout } from "../components/layouts";
-import ListClient from "../components/clients/list";
 
 function HomePage() {
   return (
