@@ -12,15 +12,15 @@ import {
   Box,
   Alert,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect } from "react";
+import useFormSubmit from "../../../hooks/clientSubmitHooks";
 
 const formOptions = {
   resolver: zodResolver(ClientSchema),
 };
 
 const AddClient = () => {
-  const [submitSuccess, setSubmitSuccess] = useState(false);
-  const [submitError, setSubmitError] = useState(false);
+  const { onSubmit, submitSuccess, submitError, isLoading } = useFormSubmit();
 
   const {
     register,
@@ -30,27 +30,14 @@ const AddClient = () => {
     reset,
   } = useForm(formOptions);
 
-  const onSubmit = async (data: unknown) => {
-    try {
-      ClientSchema.parse(data);
-      const response = await fetch("/api/clients/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      setSubmitSuccess(true);
+  useEffect(() => {
+    if (submitSuccess) {
       reset();
-    } catch (error) {
-      setSubmitError(true);
     }
-  };
+
+    // I really don't wanna to add reset to the dependency array, because it's reference doesn't change
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [submitSuccess]);
 
   const tipo = watch("tipo");
 
@@ -184,8 +171,8 @@ const AddClient = () => {
         )}
       </Box>
 
-      <Button type="submit" variant="contained">
-        Enviar
+      <Button type="submit" disabled={isLoading} variant="contained">
+        {isLoading ? "Loading..." : "Enviar"}
       </Button>
     </form>
   );
