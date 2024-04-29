@@ -28,6 +28,7 @@ export const useClient = () => {
     data: clients,
     isLoading,
     error,
+    refetch,
   } = useQuery({
     queryKey: ["clients"],
     queryFn: fetchClients,
@@ -41,5 +42,5 @@ export const useClient = () => {
     },
   });
 
-  return { clients, removeClient, isLoading, error, deleteError };
+  return { clients, removeClient, isLoading, error, deleteError, refetch };
 };

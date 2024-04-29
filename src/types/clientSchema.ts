@@ -28,7 +28,7 @@ export const PFClient = BaseClient.merge(
       .string()
       .min(11, { message: "CPF é obrigatório e deve ter 11 Caracteres" })
       .refine(validateCPF, {
-        message: "CPF Inválido",
+        message: "CPF Inválido (somente números)",
       }),
   })
 );

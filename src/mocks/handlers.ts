@@ -5,8 +5,7 @@ import {
   clientMap,
   clientMapHasId,
   getClientsFromSessionStorage,
-  initializeSessionStorage,
-} from "../utils";
+} from "../utils/storageUtils";
 
 export const handlers = [
   http.get("/api/clients", () => {
@@ -15,11 +14,6 @@ export const handlers = [
   }),
 
   http.post("/api/clients", async ({ request }) => {
-    //This will assure to have the default clients in the session storage before creating a new one
-    if (!sessionStorage.getItem("clients")) {
-      initializeSessionStorage();
-    }
-
     const client = (await request.json()) as TypeClient;
     try {
       ClientSchema.parse(client);

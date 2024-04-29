@@ -12,6 +12,8 @@ export class ClientMap extends Map {
         this.set(String(client.id), client)
       );
     }
+
+    console.log("\n\n***\n clients no map: ", clients, "\n***\n");
   }
 
   set(key: string, value: TypeClient) {
