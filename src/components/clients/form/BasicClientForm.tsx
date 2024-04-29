@@ -27,6 +27,7 @@ export const BasicClientForm: FC<ClientFormProps> = ({ register, errors }) => (
         error={!!errors.ddd}
         helperText={(errors.ddd as FieldError)?.message}
         inputProps={{ maxLength: 2 }}
+        maxLength="2"
         noBox={true}
       />
       <FormInput
@@ -35,6 +36,7 @@ export const BasicClientForm: FC<ClientFormProps> = ({ register, errors }) => (
         register={register("telefone", { required: true })}
         error={!!errors.telefone}
         helperText={(errors.telefone as FieldError)?.message}
+        maxLength="9"
         noBox={true}
       />
       {!errors.telefone && (

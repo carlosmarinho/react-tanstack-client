@@ -30,7 +30,7 @@ export const PersonClientForm: FC<ClientFormProps> = ({ register, errors }) => (
       register={register("cpf", { required: true })}
       error={!!errors.cpf}
       helperText={(errors.cpf as FieldError)?.message}
-      inputProps={{ maxLength: 11 }}
+      maxLength="11"
     >
       {!errors.cpf && (
         <FormHelperText>{CLIENT_STRINGS.CPF_HELP}</FormHelperText>

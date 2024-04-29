@@ -28,12 +28,13 @@ export const FormInput: React.FC<FormInputProps> = ({
   maxLength,
   sx,
   noBox = false,
+  inputProps = {},
 }) => {
   console.log(
     "\n\n***\n label, nobox, fullwidth: ",
     label,
-    noBox,
-    fullWidth,
+    maxLength,
+    inputProps,
     "\n***\n"
   );
   const textField = (
@@ -44,7 +45,7 @@ export const FormInput: React.FC<FormInputProps> = ({
       error={error}
       helperText={helperText}
       fullWidth={noBox ? false : fullWidth}
-      inputProps={{ maxLength }}
+      inputProps={{ maxLength, ...inputProps }}
       sx={sx}
     >
       {children}

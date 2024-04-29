@@ -4,11 +4,14 @@ import { ClientSchema } from "../types";
 import { useMutation } from "@tanstack/react-query";
 
 const useFormSubmit = () => {
-  const submitClient = useCallback(async (data: unknown) => {
+  const submitClient = useCallback(async (data: unknown, id?: string) => {
     try {
       ClientSchema.parse(data);
-      const response = await fetch("/api/clients/", {
-        method: "POST",
+      const url = id ? `/api/clients/${id}` : "/api/clients/";
+      const method = id ? "PUT" : "POST";
+
+      const response = await fetch(url, {
+        method,
         headers: {
           "Content-Type": "application/json",
         },
@@ -24,7 +27,7 @@ const useFormSubmit = () => {
   }, []);
 
   const {
-    mutate: addClient,
+    mutate: addOrEditClient,
     error: submitError,
     isSuccess: submitSuccess,
     isPending: isSubmitting,
@@ -32,7 +35,7 @@ const useFormSubmit = () => {
     mutationFn: submitClient,
   });
 
-  return { addClient, submitSuccess, submitError, isSubmitting };
+  return { addOrEditClient, submitSuccess, submitError, isSubmitting };
 };
 
 export default useFormSubmit;

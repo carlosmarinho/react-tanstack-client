@@ -14,6 +14,7 @@ export const CompanyClientForm: FC<ClientFormProps> = ({
       register={register("cnpj", { required: true })}
       error={!!errors.cnpj}
       helperText={(errors.cnpj as FieldError)?.message}
+      maxLength="14"
     />
     <FormInput
       label={CLIENT_STRINGS.NOME_FANTASIA}

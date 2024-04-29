@@ -3,11 +3,11 @@ import useFormSubmit from "../../../hooks/clientSubmitHooks";
 import ClientForm from "../form/ClientForm";
 
 const AddClient = () => {
-  const { addClient, submitSuccess, submitError, isSubmitting } =
+  const { addOrEditClient, submitSuccess, submitError, isSubmitting } =
     useFormSubmit();
 
   const onSubmit = (data: unknown) => {
-    addClient(data);
+    addOrEditClient(data);
   };
 
   return (
