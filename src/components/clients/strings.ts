@@ -1,0 +1,16 @@
+export const CLIENT_STRINGS = {
+  CREATE_SUCCESS: "Cliente cadastrado com sucesso!",
+  CREATE_ERROR: "Um erro ocorreu ao tentar cadastrar o cliente!.",
+  TIPO_LABEL: "Tipo",
+  SELECT_TIPO: "Selecione o tipo",
+  PF: "PF",
+  PJ: "PJ",
+  SUBMIT: "Enviar",
+  LOADING: "Loading...",
+  CNPJ: "CNPJ",
+  NOME_FANTASIA: "Nome Fantasia",
+  RAZAO_SOCIAL: "Razão Social",
+  NOME: "Nome",
+  CPF: "CPF",
+  CPF_HELP: "Este campo aceita apenas números",
+};
