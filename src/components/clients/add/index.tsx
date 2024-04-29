@@ -2,7 +2,6 @@ import { useForm, FieldError } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ClientSchema } from "../../../types";
 import {
-  TextField,
   Select,
   MenuItem,
   FormControl,
@@ -14,6 +13,7 @@ import {
 } from "@mui/material";
 import { useEffect } from "react";
 import useFormSubmit from "../../../hooks/clientSubmitHooks";
+import { FormInput } from "../../form/formInput";
 
 const formOptions = {
   resolver: zodResolver(ClientSchema),
@@ -75,100 +75,86 @@ const AddClient = () => {
       {tipo === "PF" && (
         <>
           <Box marginBottom={2}>
-            <TextField
+            <FormInput
               label="Nome"
-              {...register("nome", { required: true })}
+              register={register("nome", { required: true })}
               error={!!errors.nome}
               helperText={(errors.nome as FieldError)?.message}
-              fullWidth
             />
           </Box>
           {/**
            * @todo add mask to this field maybe using react-input-mask to
            * allow separation between numbers
            */}
-          <Box marginBottom={2}>
-            <TextField
-              label="CPF"
-              {...register("cpf", { required: true })}
-              error={!!errors.cpf}
-              helperText={(errors.cpf as FieldError)?.message}
-              fullWidth
-              inputProps={{ maxLength: "11" }}
-            />
+          <FormInput
+            label="CPF"
+            register={register("cpf", { required: true })}
+            error={!!errors.cpf}
+            helperText={(errors.cpf as FieldError)?.message}
+            inputProps={{ maxLength: 11 }}
+          >
             {!errors.cpf && (
               <FormHelperText>Este campo aceita apenas números</FormHelperText>
             )}
-          </Box>
+          </FormInput>
         </>
       )}
 
       {tipo === "PJ" && (
         <>
-          <Box marginBottom={2}>
-            <TextField
-              label="CNPJ"
-              {...register("cnpj", { required: true })}
-              error={!!errors.cnpj}
-              helperText={(errors.cnpj as FieldError)?.message}
-              fullWidth
-              inputProps={{ maxLength: "14" }}
-            />
+          <FormInput
+            label="CNPJ"
+            register={register("cnpj", { required: true })}
+            error={!!errors.cnpj}
+            helperText={(errors.cnpj as FieldError)?.message}
+            inputProps={{ maxLength: 14 }}
+          >
             {!errors.cnpj && (
               <FormHelperText>Este campo aceita apenas números!</FormHelperText>
             )}
-          </Box>
-          <Box marginBottom={2}>
-            <TextField
-              label="Nome Fantasia"
-              {...register("nomeFantasia", { required: true })}
-              error={!!errors.nomeFantasia}
-              helperText={(errors.nomeFantasia as FieldError)?.message}
-              fullWidth
-            />
-          </Box>
-          <Box marginBottom={2}>
-            <TextField
-              label="Razão Social"
-              {...register("razaoSocial", { required: true })}
-              error={!!errors.razaoSocial}
-              helperText={(errors.razaoSocial as FieldError)?.message}
-              fullWidth
-            />
-          </Box>
+          </FormInput>
+          <FormInput
+            label="Nome Fantasia"
+            register={register("nomeFantasia", { required: true })}
+            error={!!errors.nomeFantasia}
+            helperText={(errors.nomeFantasia as FieldError)?.message}
+          />
+          <FormInput
+            label="Razão Social"
+            register={register("razaoSocial", { required: true })}
+            error={!!errors.razaoSocial}
+            helperText={(errors.razaoSocial as FieldError)?.message}
+          />
         </>
       )}
-
+      <FormInput
+        label="Email"
+        register={register("email", { required: true })}
+        error={!!errors.email}
+        helperText={errors.email && "Este campo é obrigatório"}
+        fullWidth
+      />
       <Box marginBottom={2}>
-        <TextField
-          label="Email"
-          {...register("email", { required: true })}
-          error={!!errors.email}
-          helperText={errors.email && "Este campo é obrigatório"}
-          // helperText={errors.email?.message}
-          fullWidth
-        />
-      </Box>
-
-      <Box marginBottom={2}>
-        <TextField
+        <FormInput
           sx={{ width: "18%", marginRight: "10px" }}
           label="DDD"
-          {...register("ddd", { required: true, pattern: /^[0-9]{2}$/ })}
+          register={register("ddd", { required: true, pattern: /^[0-9]{2}$/ })}
           error={!!errors.ddd}
           helperText={(errors.ddd as FieldError)?.message}
-          inputProps={{ maxLength: "2" }}
+          inputProps={{ maxLength: 2 }}
+          noBox={true}
         />
-        <TextField
+        <FormInput
           sx={{ width: "80%" }}
           label="Telefone"
-          {...register("telefone", { required: true })}
+          register={register("telefone", { required: true })}
           error={!!errors.telefone}
           helperText={
             errors.telefone &&
             "Campo Telefone é obrigatório e deve começar com o número 9"
           }
-          inputProps={{ maxLength: "9" }}
+          inputProps={{ maxLength: 9 }}
+          noBox={true}
         />
         {!errors.telefone && (
           <FormHelperText>DDD e Telefone aceita apenas números</FormHelperText>
