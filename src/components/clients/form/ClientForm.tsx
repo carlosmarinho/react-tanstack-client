@@ -3,6 +3,11 @@ import { CLIENT_STRINGS } from "../strings";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ClientSchema } from "../../../types";
 import { Controller, useForm } from "react-hook-form";
+import { PersonClientForm } from "./PersonClientForm";
+import { CompanyClientForm } from "./CompanyClientForm";
+import { BasicClientForm } from "./BasicClientForm";
+import { TypeClient } from "../../../types/clientSchema";
+import { useNavigate } from "react-router-dom";
 import {
   Alert,
   Box,
@@ -13,15 +18,10 @@ import {
   MenuItem,
   Select,
 } from "@mui/material";
-import { PersonClientForm } from "./PersonClientForm";
-import { CompanyClientForm } from "./CompanyClientForm";
-import { BasicClientForm } from "./BasicClientForm";
-import { TypeClient } from "../../../types/clientSchema";
-import { Navigate, useNavigate } from "react-router-dom";
 
 interface ClientFormProps {
   client?: TypeClient;
-  actionClient: (data: unknown) => void;
+  actionClient: (data: TypeClient) => void;
   submitSuccess: boolean;
   submitError: Error | null;
   isSubmitting: boolean;

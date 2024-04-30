@@ -1,13 +1,13 @@
-import useFormSubmit from "../../../hooks/clientSubmitHooks";
+import { useAddClient } from "../../../hooks/addClientHook";
 
 import ClientForm from "../form/ClientForm";
 
 const AddClient = () => {
-  const { addOrEditClient, submitSuccess, submitError, isSubmitting } =
-    useFormSubmit();
+  const { addClient, submitSuccess, submitError, isSubmitting } =
+    useAddClient();
 
   const onSubmit = (data: unknown) => {
-    addOrEditClient(data);
+    addClient(data);
   };
 
   return (
