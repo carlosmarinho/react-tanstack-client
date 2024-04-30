@@ -5,7 +5,7 @@ import React from "react";
 
 interface FormInputProps {
   label: string;
-  register: UseFormRegisterReturn<string> | undefined; // Replace 'any' with the appropriate type
+  register?: UseFormRegisterReturn<string> | undefined; // Replace 'any' with the appropriate type
   required?: boolean;
   error: boolean;
   helperText: string | undefined;
@@ -30,13 +30,6 @@ export const FormInput: React.FC<FormInputProps> = ({
   noBox = false,
   inputProps = {},
 }) => {
-  console.log(
-    "\n\n***\n label, nobox, fullwidth: ",
-    label,
-    maxLength,
-    inputProps,
-    "\n***\n"
-  );
   const textField = (
     <TextField
       label={label}

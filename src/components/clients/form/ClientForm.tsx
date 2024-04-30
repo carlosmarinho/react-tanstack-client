@@ -16,8 +16,10 @@ import {
 import { PersonClientForm } from "./PersonClientForm";
 import { CompanyClientForm } from "./CompanyClientForm";
 import { BasicClientForm } from "./BasicClientForm";
+import { TypeClient } from "../../../types/clientSchema";
 
 interface ClientFormProps {
+  client?: TypeClient;
   actionClient: (data: unknown) => void;
   submitSuccess: boolean;
   submitError: Error | null;
@@ -29,6 +31,7 @@ const formOptions = {
 };
 
 const ClientForm: React.FC<ClientFormProps> = ({
+  client,
   actionClient,
   submitSuccess,
   submitError,
@@ -42,7 +45,7 @@ const ClientForm: React.FC<ClientFormProps> = ({
     watch,
     formState: { errors },
     reset,
-  } = useForm(formOptions);
+  } = useForm<TypeClient>({ ...formOptions, defaultValues: client });
 
   useEffect(() => {
     if (submitSuccess) {
@@ -53,6 +56,8 @@ const ClientForm: React.FC<ClientFormProps> = ({
   }, [submitSuccess]);
 
   const tipo = watch("tipo");
+
+  console.log("\n\n***\n client: ", client, "\n***\n");
 
   return (
     <form onSubmit={handleSubmit(actionClient)}>
@@ -79,14 +84,10 @@ const ClientForm: React.FC<ClientFormProps> = ({
         </FormControl>
       </Box>
 
-      {tipo === "PF" && (
-        <PersonClientForm register={register} errors={errors} />
-      )}
+      {tipo === "PF" && <PersonClientForm errors={errors} />}
 
-      {tipo === "PJ" && (
-        <CompanyClientForm register={register} errors={errors} />
-      )}
-      <BasicClientForm register={register} errors={errors} />
+      {tipo === "PJ" && <CompanyClientForm errors={errors} />}
+      <BasicClientForm errors={errors} />
       <Box sx={{ display: "flex", justifyContent: "center" }}>
         <Button type="submit" disabled={isSubmitting} variant="contained">
           {isSubmitting ? CLIENT_STRINGS.LOADING : CLIENT_STRINGS.SUBMIT}

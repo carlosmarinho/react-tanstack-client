@@ -10,11 +10,10 @@ export interface ClientFormProps {
   errors: FieldErrors<FieldValues>;
 }
 
-export const BasicClientForm: FC<ClientFormProps> = ({ register, errors }) => (
+export const BasicClientForm: FC<ClientFormProps> = ({ errors }) => (
   <>
     <FormInput
       label="Email"
-      register={register("email", { required: true })}
       error={!!errors.email}
       helperText={errors.email && "Este campo é obrigatório"}
       fullWidth
@@ -23,7 +22,6 @@ export const BasicClientForm: FC<ClientFormProps> = ({ register, errors }) => (
       <FormInput
         sx={{ width: "18%", marginRight: "10px" }}
         label="DDD"
-        register={register("ddd", { required: true, pattern: /^[0-9]{2}$/ })}
         error={!!errors.ddd}
         helperText={(errors.ddd as FieldError)?.message}
         inputProps={{ maxLength: 2 }}
@@ -33,7 +31,6 @@ export const BasicClientForm: FC<ClientFormProps> = ({ register, errors }) => (
       <FormInput
         sx={{ width: "80%" }}
         label="Telefone"
-        register={register("telefone", { required: true })}
         error={!!errors.telefone}
         helperText={(errors.telefone as FieldError)?.message}
         maxLength="9"

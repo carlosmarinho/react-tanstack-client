@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { FieldError, FieldErrors, UseFormRegister } from "react-hook-form";
+import { FieldError, FieldErrors } from "react-hook-form";
 import { FormInput } from "../../customForm/formInput";
 import { Box, FormHelperText } from "@mui/material";
 
@@ -7,16 +7,14 @@ import { FieldValues } from "react-hook-form";
 import { CLIENT_STRINGS } from "../strings";
 
 export interface ClientFormProps {
-  register: UseFormRegister<FieldValues>;
   errors: FieldErrors<FieldValues>;
 }
 
-export const PersonClientForm: FC<ClientFormProps> = ({ register, errors }) => (
+export const PersonClientForm: FC<ClientFormProps> = ({ errors }) => (
   <>
     <Box marginBottom={2}>
       <FormInput
         label={CLIENT_STRINGS.NOME}
-        register={register("nome", { required: true })}
         error={!!errors.nome}
         helperText={(errors.nome as FieldError)?.message}
       />
@@ -27,7 +25,6 @@ export const PersonClientForm: FC<ClientFormProps> = ({ register, errors }) => (
      */}
     <FormInput
       label={CLIENT_STRINGS.CPF}
-      register={register("cpf", { required: true })}
       error={!!errors.cpf}
       helperText={(errors.cpf as FieldError)?.message}
       maxLength="11"
