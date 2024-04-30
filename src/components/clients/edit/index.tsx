@@ -5,6 +5,7 @@ import ClientForm from "../form/ClientForm";
 import { TypeClient } from "../../../types/clientSchema";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import Loading from "../../common/Loading";
 
 const EditClient = () => {
   const { id } = useParams();
@@ -30,7 +31,13 @@ const EditClient = () => {
     addOrEditClient(data);
   };
 
-  console.log("\n\n***\n : ", "\n***\n");
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    return <div>An error occurred: {error.message}</div>;
+  }
 
   return (
     <ClientForm

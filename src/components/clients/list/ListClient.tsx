@@ -1,8 +1,9 @@
-import { Alert, Box, CircularProgress, List, Typography } from "@mui/material";
+import { Alert, List, Typography } from "@mui/material";
 import { useClient } from "../../../hooks/clientHooks";
 import ConfirmDeleteDialog from "./ConfirmDeleteDialog";
 import { useState } from "react";
 import ClientListItem from "./ClientListItem";
+import Loading from "../../common/Loading";
 
 function ListClient() {
   const { clients, isLoading, removeClient, error, deleteError } = useClient();
@@ -15,11 +16,7 @@ function ListClient() {
   }
 
   if (isLoading) {
-    return (
-      <Box display="flex" justifyContent="center" alignItems="center">
-        <CircularProgress />
-      </Box>
-    );
+    return <Loading />;
   }
 
   return (
