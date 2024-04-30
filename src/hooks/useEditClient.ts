@@ -17,9 +17,10 @@ export const useEditClient = () => {
   } = useMutation({
     mutationFn: ({ id, data }: { id: number; data: TypeClient }) =>
       submitEditClientMemo(data, id),
-    onSuccess: (id) => {
+    onSuccess: ({ id }) => {
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ["client", id] });
+
+      queryClient.invalidateQueries({ queryKey: ["client", id.toString()] });
     },
   });
 

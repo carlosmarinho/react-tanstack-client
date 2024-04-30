@@ -18,6 +18,8 @@ export const submitEditClient = async (data: TypeClient, id: number) => {
   } catch (error) {
     console.error("Validation error:", error);
   }
+
+  return { id };
 };
 
 export const submitAddClient = async (data: unknown) => {

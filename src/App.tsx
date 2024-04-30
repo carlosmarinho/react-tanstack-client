@@ -4,6 +4,7 @@ import AddClientPage from "./pages/client/Add";
 import EditClientPage from "./pages/client/Edit";
 import HomePage from "./pages/home";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 // Create a client
 const queryClient = new QueryClient();
@@ -19,6 +20,7 @@ function App() {
           <Route path="/list-client" Component={ListClient} />
         </Routes>
       </Router>
+      <ReactQueryDevtools initialIsOpen={true} />
     </QueryClientProvider>
   );
 }
