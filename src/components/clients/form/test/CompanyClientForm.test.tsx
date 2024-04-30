@@ -1,6 +1,7 @@
-import { render, screen } from "@testing-library/react";
-import { Wrapper } from "../../../../test/testUtil";
+import { render } from "@testing-library/react";
 import { CompanyClientForm } from "../CompanyClientForm";
+import Wrapper from "../../../../test/Wrapper";
+import { checkField } from "../../../../test/testUtil";
 
 describe("CompanyClientForm", () => {
   it("should renders correctly", () => {
@@ -12,15 +13,8 @@ describe("CompanyClientForm", () => {
       </Wrapper>
     );
 
-    expect(screen.getByLabelText(/cnpj/i)).toBeInTheDocument();
-    expect(screen.getByRole("textbox", { name: /cnpj/i })).toBeInTheDocument();
-    expect(screen.getByLabelText(/Nome Fantasia/i)).toBeInTheDocument();
-    expect(
-      screen.getByRole("textbox", { name: /nome fantasia/i })
-    ).toBeInTheDocument();
-    expect(screen.getByLabelText(/Razão Social/i)).toBeInTheDocument();
-    expect(
-      screen.getByRole("textbox", { name: /razão social/i })
-    ).toBeInTheDocument();
+    checkField("cnpj", "textbox");
+    checkField("Nome Fantasia", "textbox");
+    checkField("Razão Social", "textbox");
   });
 });

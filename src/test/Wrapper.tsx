@@ -3,7 +3,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import { ClientFormProps } from "../components/clients/form/BasicClientForm";
 import { TypeClient } from "../types/clientSchema";
 
-export const Wrapper: FC<{
+const Wrapper: FC<{
   children: (props: ClientFormProps) => ReactNode;
 }> = ({ children }) => {
   const Wrapper: FC<{
@@ -23,3 +23,5 @@ export const Wrapper: FC<{
 
   return <Wrapper>{children}</Wrapper>;
 };
+
+export default Wrapper;

@@ -1,6 +1,7 @@
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import { PersonClientForm } from "../PersonClientForm";
-import { Wrapper } from "../../../../test/testUtil";
+import Wrapper from "../../../../test/Wrapper";
+import { checkField } from "../../../../test/testUtil";
 
 describe("PersonClientForm", () => {
   it("should renders correctly", () => {
@@ -12,9 +13,7 @@ describe("PersonClientForm", () => {
       </Wrapper>
     );
 
-    expect(screen.getByLabelText(/nome/i)).toBeInTheDocument();
-    expect(screen.getByRole("textbox", { name: /nome/i })).toBeInTheDocument();
-    expect(screen.getByLabelText(/cpf/i)).toBeInTheDocument();
-    expect(screen.getByRole("textbox", { name: /cpf/i })).toBeInTheDocument();
+    checkField("nome", "textbox");
+    checkField("cpf", "textbox");
   });
 });

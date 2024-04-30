@@ -1,6 +1,7 @@
-import { render, screen } from "@testing-library/react";
-import { Wrapper } from "../../../../test/testUtil";
+import { render } from "@testing-library/react";
 import { BasicClientForm } from "../BasicClientForm";
+import Wrapper from "../../../../test/Wrapper";
+import { checkField } from "../../../../test/testUtil";
 
 describe("BasicClientForm", () => {
   it("should renders correctly", () => {
@@ -12,13 +13,8 @@ describe("BasicClientForm", () => {
       </Wrapper>
     );
 
-    expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
-    expect(screen.getByRole("textbox", { name: /email/i })).toBeInTheDocument();
-    expect(screen.getByLabelText(/ddd/i)).toBeInTheDocument();
-    expect(screen.getByRole("textbox", { name: /ddd/i })).toBeInTheDocument();
-    expect(screen.getByLabelText(/telefone/i)).toBeInTheDocument();
-    expect(
-      screen.getByRole("textbox", { name: /telefone/i })
-    ).toBeInTheDocument();
+    checkField("email", "textbox");
+    checkField("ddd", "textbox");
+    checkField("telefone", "textbox");
   });
 });
