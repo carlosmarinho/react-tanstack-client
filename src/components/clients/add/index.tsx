@@ -1,23 +1,2 @@
-import { useAddClient } from "../../../hooks/useAddClient";
-
-import ClientForm from "../form/ClientForm";
-
-const AddClient = () => {
-  const { addClient, submitSuccess, submitError, isSubmitting } =
-    useAddClient();
-
-  const onSubmit = (data: unknown) => {
-    addClient(data);
-  };
-
-  return (
-    <ClientForm
-      actionClient={onSubmit}
-      submitSuccess={submitSuccess}
-      submitError={submitError}
-      isSubmitting={isSubmitting}
-    />
-  );
-};
-
-export default AddClient;
+//Here we have only one file we could maybe not create an index, but it's a good practice to always create an index file for each folder and keep consistency along the project.
+export { default as AddClient } from "./AddClient";

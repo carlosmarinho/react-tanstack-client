@@ -1,4 +1,4 @@
-import EditClient from "../../components/clients/edit";
+import EditClient from "../../components/clients/edit/EditClient";
 import { Layout } from "../../components/layouts";
 
 function AddClientPage() {
