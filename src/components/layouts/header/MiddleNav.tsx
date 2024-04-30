@@ -2,7 +2,7 @@ import { Typography, styled } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import { Nav } from "./LeftNav";
 
-import { useClient } from "../../../hooks/clientHooks";
+import { useClient } from "../../../hooks/useClient";
 import { gnerateFakeClientsToSessionStorage } from "../../../utils/storageUtils";
 
 const NavLinkCustom = styled(NavLink)({

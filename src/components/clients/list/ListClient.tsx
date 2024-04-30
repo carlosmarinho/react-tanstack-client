@@ -1,5 +1,5 @@
 import { Alert, List, Typography } from "@mui/material";
-import { useClient } from "../../../hooks/clientHooks";
+import { useClient } from "../../../hooks/useClient";
 import ConfirmDeleteDialog from "./ConfirmDeleteDialog";
 import { useState } from "react";
 import ClientListItem from "./ClientListItem";
