@@ -1,7 +1,7 @@
 import ClientForm from "../form/ClientForm";
 import Loading from "../../common/Loading";
-import { useFetchClient } from "../../../hooks/fetchClientHook";
-import useEditClient from "../../../hooks/editClientHook";
+import { useFetchClient } from "../../../hooks/useFetchClient";
+import useEditClient from "../../../hooks/useEditClient";
 import { TypeClient } from "../../../types/clientSchema";
 
 const EditClient = () => {

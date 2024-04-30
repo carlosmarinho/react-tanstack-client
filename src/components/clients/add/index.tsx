@@ -1,4 +1,4 @@
-import { useAddClient } from "../../../hooks/addClientHook";
+import { useAddClient } from "../../../hooks/useAddClient";
 
 import ClientForm from "../form/ClientForm";
 

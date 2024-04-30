@@ -1,28 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback } from "react";
-import { TypeClient } from "../types/clientSchema";
+import { deleteClient, fetchClients } from "../api/client";
 
 export const useClient = () => {
   const queryClient = useQueryClient();
 
-  const fetchClients = useCallback(async () => {
-    const response = await fetch("/api/clients");
-    return (await response.json()) as TypeClient[];
-  }, []);
-
-  const deleteClient = useCallback(async (id: number) => {
-    try {
-      const response = await fetch(`/api/clients/${id}`, {
-        method: "DELETE",
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-    } catch (error) {
-      throw new Error(`Erro ao deletar: ${(error as Error).message}`);
-    }
-  }, []);
+  const fetchClientsMemo = useCallback(fetchClients, []);
+  const deleteClientMemo = useCallback(deleteClient, []);
 
   const {
     data: clients,
@@ -31,11 +15,11 @@ export const useClient = () => {
     refetch,
   } = useQuery({
     queryKey: ["clients"],
-    queryFn: fetchClients,
+    queryFn: fetchClientsMemo,
   });
 
   const { mutate: removeClient, error: deleteError } = useMutation({
-    mutationFn: deleteClient,
+    mutationFn: deleteClientMemo,
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries({ queryKey: ["clients"] });

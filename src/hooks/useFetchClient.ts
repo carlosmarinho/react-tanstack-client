@@ -1,23 +1,20 @@
 import { useParams } from "react-router-dom";
 import { useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { TypeClient } from "../types/clientSchema";
+import { fetchClient } from "../api/client";
 
 export const useFetchClient = () => {
   const { id } = useParams();
 
-  const fetchClient = useCallback(async () => {
-    const response = await fetch(`/api/clients/${id}`);
-    return (await response.json()) as TypeClient;
-  }, [id]);
+  const fetchClientMemo = useCallback(() => fetchClient(id), [id]);
 
   const {
     data: client,
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["client"],
-    queryFn: fetchClient,
+    queryKey: ["client", id],
+    queryFn: fetchClientMemo,
   });
 
   return { client, isLoading, error };
