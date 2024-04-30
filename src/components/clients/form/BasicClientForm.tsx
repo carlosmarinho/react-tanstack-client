@@ -5,6 +5,7 @@ import { Box, FormHelperText } from "@mui/material";
 
 import { FieldValues } from "react-hook-form";
 import { TypeClient } from "../../../types/clientSchema";
+import { CLIENT_STRINGS } from "../strings";
 
 export interface ClientFormProps {
   errors: FieldErrors<FieldValues>;
@@ -19,9 +20,9 @@ export const BasicClientForm: FC<ClientFormProps> = ({ errors, control }) => (
       defaultValue=""
       render={({ field }) => (
         <FormInput
-          label="Email"
+          label={CLIENT_STRINGS.EMAIL}
           error={!!errors.email}
-          helperText={errors.email && "Este campo é obrigatório"}
+          helperText={errors.email && CLIENT_STRINGS.EMAIL_ERROR}
           fullWidth
           field={field}
         />
@@ -36,7 +37,7 @@ export const BasicClientForm: FC<ClientFormProps> = ({ errors, control }) => (
         render={({ field }) => (
           <FormInput
             sx={{ width: "18%", marginRight: "10px" }}
-            label="DDD"
+            label={CLIENT_STRINGS.DDD}
             error={!!errors.ddd}
             helperText={(errors.ddd as FieldError)?.message}
             inputProps={{ maxLength: 2 }}
@@ -54,7 +55,7 @@ export const BasicClientForm: FC<ClientFormProps> = ({ errors, control }) => (
         render={({ field }) => (
           <FormInput
             sx={{ width: "80%" }}
-            label="Telefone"
+            label={CLIENT_STRINGS.TELEPHONE}
             error={!!errors.telefone}
             helperText={(errors.telefone as FieldError)?.message}
             maxLength="9"
@@ -64,7 +65,7 @@ export const BasicClientForm: FC<ClientFormProps> = ({ errors, control }) => (
         )}
       />
       {!errors.telefone && (
-        <FormHelperText>DDD e Telefone aceita apenas números</FormHelperText>
+        <FormHelperText>{CLIENT_STRINGS.TELEPHONE_HELP}</FormHelperText>
       )}
     </Box>
   </>

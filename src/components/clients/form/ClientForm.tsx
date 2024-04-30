@@ -70,17 +70,31 @@ const ClientForm: React.FC<ClientFormProps> = ({
     navigate("/"); // This is a fake function, it should be replaced by a real one
   };
 
+  const getSubmitButtonText = (
+    isSubmitting: boolean,
+    client: TypeClient | null
+  ): string => {
+    if (isSubmitting) {
+      return CLIENT_STRINGS.LOADING;
+    }
+    return client ? CLIENT_STRINGS.SUBMIT_EDIT : CLIENT_STRINGS.SUBMIT;
+  };
+
   const tipo = watch("tipo");
 
   return (
     <form onSubmit={handleSubmit(actionClient)}>
       {submitSuccess && (
-        <Alert severity="success">{CLIENT_STRINGS.CREATE_SUCCESS}</Alert>
+        <Alert severity="success">
+          {client ? CLIENT_STRINGS.EDIT_SUCCESS : CLIENT_STRINGS.CREATE_SUCCESS}
+        </Alert>
       )}
       {submitError && (
-        <Alert severity="error">{CLIENT_STRINGS.CREATE_ERROR}</Alert>
+        <Alert severity="error">
+          {client ? CLIENT_STRINGS.EDIT_ERROR : CLIENT_STRINGS.CREATE_ERROR}
+        </Alert>
       )}
-      <Box marginBottom={2}>
+      <Box marginBottom={2} marginTop={2}>
         <FormControl error={!!errors.tipo} fullWidth>
           <InputLabel id="tipo-label">{CLIENT_STRINGS.TIPO_LABEL}</InputLabel>
           <Controller
@@ -111,7 +125,7 @@ const ClientForm: React.FC<ClientFormProps> = ({
           {CLIENT_STRINGS.BACK}
         </Button>
         <Button type="submit" disabled={isSubmitting} variant="contained">
-          {isSubmitting ? CLIENT_STRINGS.LOADING : CLIENT_STRINGS.SUBMIT}
+          {getSubmitButtonText(isSubmitting, client || null)}
         </Button>
       </Box>
     </form>
