@@ -3,7 +3,7 @@ import { PersonClientForm } from "../PersonClientForm";
 import { Wrapper } from "../../../../test/testUtil";
 
 describe("PersonClientForm", () => {
-  it("renders without crashing", () => {
+  it("should renders correctly", () => {
     render(
       <Wrapper>
         {(props) => (

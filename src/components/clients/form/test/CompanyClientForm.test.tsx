@@ -2,8 +2,8 @@ import { render, screen } from "@testing-library/react";
 import { Wrapper } from "../../../../test/testUtil";
 import { CompanyClientForm } from "../CompanyClientForm";
 
-describe("PersonClientForm", () => {
-  it("renders without crashing", () => {
+describe("CompanyClientForm", () => {
+  it("should renders correctly", () => {
     render(
       <Wrapper>
         {(props) => (
@@ -11,8 +11,6 @@ describe("PersonClientForm", () => {
         )}
       </Wrapper>
     );
-
-    screen.logTestingPlaygroundURL();
 
     expect(screen.getByLabelText(/cnpj/i)).toBeInTheDocument();
     expect(screen.getByRole("textbox", { name: /cnpj/i })).toBeInTheDocument();

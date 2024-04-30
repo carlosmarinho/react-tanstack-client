@@ -2,8 +2,8 @@ import { render, screen } from "@testing-library/react";
 import { Wrapper } from "../../../../test/testUtil";
 import { BasicClientForm } from "../BasicClientForm";
 
-describe("PersonClientForm", () => {
-  it("renders without crashing", () => {
+describe("BasicClientForm", () => {
+  it("should renders correctly", () => {
     render(
       <Wrapper>
         {(props) => (
