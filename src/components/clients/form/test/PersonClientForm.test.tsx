@@ -1,26 +1,8 @@
-import { FC, ReactNode } from "react";
 import { render, screen } from "@testing-library/react";
-import { useForm, FormProvider } from "react-hook-form";
 import { PersonClientForm } from "../PersonClientForm";
-import { ClientFormProps } from "../BasicClientForm";
-import { TypeClient } from "../../../../types/clientSchema";
+import { Wrapper } from "../../../../test/testUtil";
 
 describe("PersonClientForm", () => {
-  const Wrapper: FC<{
-    children: (props: ClientFormProps) => ReactNode;
-  }> = ({ children }) => {
-    const methods = useForm<TypeClient>();
-
-    return (
-      <FormProvider {...methods}>
-        {children({
-          errors: methods.formState.errors,
-          control: methods.control,
-        })}
-      </FormProvider>
-    );
-  };
-
   it("renders without crashing", () => {
     render(
       <Wrapper>
@@ -31,6 +13,8 @@ describe("PersonClientForm", () => {
     );
 
     expect(screen.getByLabelText(/nome/i)).toBeInTheDocument();
+    expect(screen.getByRole("textbox", { name: /nome/i })).toBeInTheDocument();
     expect(screen.getByLabelText(/cpf/i)).toBeInTheDocument();
+    expect(screen.getByRole("textbox", { name: /cpf/i })).toBeInTheDocument();
   });
 });
