@@ -13,4 +13,5 @@ export const CLIENT_STRINGS = {
   NOME: "Nome",
   CPF: "CPF",
   CPF_HELP: "Este campo aceita apenas números",
+  BACK: "Voltar",
 };

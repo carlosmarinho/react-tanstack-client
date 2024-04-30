@@ -22,8 +22,6 @@ function ListClient() {
     );
   }
 
-  console.log("clients no map", clients);
-
   return (
     <>
       <ConfirmDeleteDialog

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { CLIENT_STRINGS } from "../strings";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ClientSchema } from "../../../types";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import {
   Alert,
   Box,
@@ -17,6 +17,7 @@ import { PersonClientForm } from "./PersonClientForm";
 import { CompanyClientForm } from "./CompanyClientForm";
 import { BasicClientForm } from "./BasicClientForm";
 import { TypeClient } from "../../../types/clientSchema";
+import { Navigate, useNavigate } from "react-router-dom";
 
 interface ClientFormProps {
   client?: TypeClient;
@@ -38,14 +39,24 @@ const ClientForm: React.FC<ClientFormProps> = ({
   isSubmitting,
 }) => {
   // State variables and event handlers can be defined here
+  const navigate = useNavigate();
 
   const {
-    register,
     handleSubmit,
     watch,
     formState: { errors },
     reset,
-  } = useForm<TypeClient>({ ...formOptions, defaultValues: client });
+    control,
+  } = useForm<TypeClient>({
+    ...formOptions,
+    defaultValues: client,
+  });
+
+  useEffect(() => {
+    if (client) {
+      reset(client);
+    }
+  }, [client, reset]);
 
   useEffect(() => {
     if (submitSuccess) {
@@ -55,9 +66,11 @@ const ClientForm: React.FC<ClientFormProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [submitSuccess]);
 
-  const tipo = watch("tipo");
+  const handleBack = () => {
+    navigate("/"); // This is a fake function, it should be replaced by a real one
+  };
 
-  console.log("\n\n***\n client: ", client, "\n***\n");
+  const tipo = watch("tipo");
 
   return (
     <form onSubmit={handleSubmit(actionClient)}>
@@ -70,25 +83,33 @@ const ClientForm: React.FC<ClientFormProps> = ({
       <Box marginBottom={2}>
         <FormControl error={!!errors.tipo} fullWidth>
           <InputLabel id="tipo-label">{CLIENT_STRINGS.TIPO_LABEL}</InputLabel>
-          <Select
-            labelId="tipo-label"
-            {...register("tipo", { required: true })}
-          >
-            <MenuItem value="">{CLIENT_STRINGS.SELECT_TIPO}</MenuItem>
-            <MenuItem value="PF">{CLIENT_STRINGS.PF}</MenuItem>
-            <MenuItem value="PJ">{CLIENT_STRINGS.PJ}</MenuItem>
-          </Select>
+          <Controller
+            name="tipo"
+            control={control}
+            defaultValue={client?.tipo || undefined}
+            render={({ field }) => (
+              <Select labelId="tipo-label" {...field}>
+                <MenuItem value="">{CLIENT_STRINGS.SELECT_TIPO}</MenuItem>
+                <MenuItem value="PF">{CLIENT_STRINGS.PF}</MenuItem>
+                <MenuItem value="PJ">{CLIENT_STRINGS.PJ}</MenuItem>
+              </Select>
+            )}
+          />
           {errors.tipo && (
             <FormHelperText>{CLIENT_STRINGS.SELECT_TIPO}</FormHelperText>
           )}
         </FormControl>
       </Box>
 
-      {tipo === "PF" && <PersonClientForm errors={errors} />}
+      {tipo === "PF" && <PersonClientForm errors={errors} control={control} />}
 
-      {tipo === "PJ" && <CompanyClientForm errors={errors} />}
-      <BasicClientForm errors={errors} />
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
+      {tipo === "PJ" && <CompanyClientForm errors={errors} control={control} />}
+
+      <BasicClientForm errors={errors} control={control} />
+      <Box sx={{ display: "flex", justifyContent: "center", gap: "20px" }}>
+        <Button onClick={handleBack} variant="contained">
+          {CLIENT_STRINGS.BACK}
+        </Button>
         <Button type="submit" disabled={isSubmitting} variant="contained">
           {isSubmitting ? CLIENT_STRINGS.LOADING : CLIENT_STRINGS.SUBMIT}
         </Button>

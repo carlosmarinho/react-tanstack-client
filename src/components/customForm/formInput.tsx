@@ -15,6 +15,11 @@ interface FormInputProps {
   children?: React.ReactNode;
   sx?: SxProps;
   noBox?: boolean;
+  field?: {
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onBlur: () => void;
+    value: string;
+  };
 }
 
 export const FormInput: React.FC<FormInputProps> = ({
@@ -29,6 +34,7 @@ export const FormInput: React.FC<FormInputProps> = ({
   sx,
   noBox = false,
   inputProps = {},
+  field = {},
 }) => {
   const textField = (
     <TextField
@@ -40,6 +46,7 @@ export const FormInput: React.FC<FormInputProps> = ({
       fullWidth={noBox ? false : fullWidth}
       inputProps={{ maxLength, ...inputProps }}
       sx={sx}
+      {...field}
     >
       {children}
     </TextField>
