@@ -10,6 +10,8 @@ const EditClient = () => {
   const { editClient, submitSuccess, submitError, isSubmitting } =
     useEditClient();
 
+  console.log("\n\n***\n errorNo editclient: ", submitError, "\n***\n");
+
   const onSubmit = (data: TypeClient) => {
     if (client?.id === undefined) {
       console.error("Client ID is undefined");

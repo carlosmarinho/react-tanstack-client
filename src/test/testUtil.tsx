@@ -56,3 +56,12 @@ export async function selectClientTipo(tipo: string) {
   });
   await userEvent.click(within(optionsPopupEl).getByText(tipo));
 }
+
+export async function checkClientTipo(tipo: string) {
+  const selectLabel = /Tipo/i;
+  const selectEl = (await screen.findByLabelText(
+    selectLabel
+  )) as HTMLDivElement;
+
+  expect(selectEl.textContent).toBe(tipo);
+}
