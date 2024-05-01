@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import { PersonClientForm } from "../PersonClientForm";
 import Wrapper from "../../../../test/Wrapper";
-import { checkField } from "../../../../test/testUtil";
+import { checkPersonClientFields } from "../../../../test/testUtil";
 
 describe("PersonClientForm", () => {
   it("should renders correctly", () => {
@@ -13,7 +13,6 @@ describe("PersonClientForm", () => {
       </Wrapper>
     );
 
-    checkField("nome", "textbox");
-    checkField("cpf", "textbox");
+    checkPersonClientFields();
   });
 });
