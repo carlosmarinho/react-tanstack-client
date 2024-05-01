@@ -22,4 +22,8 @@ export const CLIENT_STRINGS = {
   DDD: "DDD",
   TELEPHONE: "Telefone",
   TELEPHONE_HELP: "DDD e Telefone aceita apenas números",
+  DELETE_TITLE: "Excluir Cliente id: ",
+  DELETE_CONFIRMATION: "Tem certeza que quer excluir o cliente com o id ",
+  CONFIRM: "Confirmar",
+  CANCEL: "Cancelar",
 };

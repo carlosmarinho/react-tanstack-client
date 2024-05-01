@@ -4,6 +4,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { CLIENT_STRINGS } from "../strings";
 
 interface ConfirmDeleteDialogProps {
   open: boolean;
@@ -37,15 +38,17 @@ export default function ConfirmDeleteDialog({
           },
         }}
       >
-        <DialogTitle>Excluir Cliente id: {`${idToDelete}`}</DialogTitle>
+        <DialogTitle>
+          {CLIENT_STRINGS.DELETE_TITLE} {idToDelete}
+        </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Tem certeza que quer excluir o cliente com o id {idToDelete}?
+            {CLIENT_STRINGS.DELETE_CONFIRMATION} {idToDelete}?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancelar</Button>
-          <Button type="submit">Confirmar</Button>
+          <Button onClick={handleClose}>{CLIENT_STRINGS.CANCEL}</Button>
+          <Button type="submit">{CLIENT_STRINGS.CONFIRM}</Button>
         </DialogActions>
       </Dialog>
     </>
