@@ -4,20 +4,18 @@ import userEvent from "@testing-library/user-event";
 import { screen, within } from "@testing-library/react";
 
 describe("AddClient", () => {
-  it("should render correctly not selecting 'tipo'", async () => {
+  beforeEach(() => {
     renderWithProviders(<AddClient />);
     checkField("email", "textbox");
     checkField("ddd", "textbox");
     checkField("telefone", "textbox");
   });
 
+  it("should render correctly not selecting 'tipo'", async () => {
+    // No additional code needed here, as the setup is done in beforeEach
+  });
+
   it("should render correctly when selecting 'PF' tipo", async () => {
-    renderWithProviders(<AddClient />);
-
-    checkField("email", "textbox");
-    checkField("ddd", "textbox");
-    checkField("telefone", "textbox");
-
     const selectLabel = /Tipo/i;
     const selectEl = await screen.findByLabelText(/Tipo/i);
     await userEvent.click(selectEl);
@@ -40,12 +38,6 @@ describe("AddClient", () => {
   });
 
   it("should render correctly when selecting 'PJ' tipo", async () => {
-    renderWithProviders(<AddClient />);
-
-    checkField("email", "textbox");
-    checkField("ddd", "textbox");
-    checkField("telefone", "textbox");
-
     const selectLabel = /Tipo/i;
     const selectEl = await screen.findByLabelText(/Tipo/i);
     await userEvent.click(selectEl);

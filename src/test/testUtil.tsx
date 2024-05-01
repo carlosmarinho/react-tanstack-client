@@ -20,3 +20,9 @@ export function checkField(label: string, role: string) {
     screen.getByRole(role, { name: new RegExp(lowerCaseLabel, "i") })
   ).toBeInTheDocument();
 }
+
+export function checkBasicClientFields() {
+  checkField("email", "textbox");
+  checkField("ddd", "textbox");
+  checkField("telefone", "textbox");
+}
