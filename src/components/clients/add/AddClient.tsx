@@ -10,8 +10,6 @@ const AddClient = () => {
     addClient(data);
   };
 
-  return <div>teset</div>;
-
   return (
     <ClientForm
       actionClient={onSubmit}

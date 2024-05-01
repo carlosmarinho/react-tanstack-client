@@ -39,7 +39,7 @@ describe("AddClient", () => {
     screen.getByRole("button", { name: /cadastrar/i });
   });
 
-  it.only("should render correctly when selecting 'PJ' tipo", async () => {
+  it("should render correctly when selecting 'PJ' tipo", async () => {
     renderWithProviders(<AddClient />);
 
     checkField("email", "textbox");
