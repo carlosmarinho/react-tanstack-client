@@ -143,11 +143,7 @@ describe("EditClient", () => {
     });
     await userEvent.click(submitButton);
 
-    screen.logTestingPlaygroundURL();
-
     const successMessage = await screen.findByText(CLIENT_STRINGS.EDIT_SUCCESS);
     expect(successMessage).toBeInTheDocument();
-
-    // expect(nomeInput).toHaveValue(newName);
   });
 });

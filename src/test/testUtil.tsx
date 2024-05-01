@@ -1,7 +1,11 @@
 import { render, screen, within } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter as Router } from "react-router-dom";
+import { MemoryRouter as Router } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
+
+export function renderWithRouter(component: JSX.Element) {
+  render(<Router>{component}</Router>);
+}
 
 export function renderWithProviders(component: JSX.Element) {
   const queryClient = new QueryClient();

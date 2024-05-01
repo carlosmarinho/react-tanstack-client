@@ -1,8 +1,8 @@
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import ClientListItem from "../ClientListItem";
 import { mockClients } from "../../../../mocks/clients";
-import { MemoryRouter } from "react-router-dom";
+import { renderWithRouter } from "../../../../test/testUtil";
 
 const clientPF = mockClients[0];
 
@@ -21,13 +21,8 @@ describe("ClientListItem", () => {
   it("renders properly", () => {
     const openDeleteModalMock = jest.fn();
 
-    render(
-      <MemoryRouter>
-        <ClientListItem
-          client={clientPF}
-          openDeleteModal={openDeleteModalMock}
-        />
-      </MemoryRouter>
+    renderWithRouter(
+      <ClientListItem client={clientPF} openDeleteModal={openDeleteModalMock} />
     );
 
     // I need to check the 'nome' cause it belongs to a client PF, else I get a typescript error on clientPF.nome
@@ -41,13 +36,8 @@ describe("ClientListItem", () => {
   it("navigates to the correct path when edit button is clicked", async () => {
     const openDeleteModalMock = jest.fn();
 
-    render(
-      <MemoryRouter>
-        <ClientListItem
-          client={clientPF}
-          openDeleteModal={openDeleteModalMock}
-        />
-      </MemoryRouter>
+    renderWithRouter(
+      <ClientListItem client={clientPF} openDeleteModal={openDeleteModalMock} />
     );
 
     const editButton = screen.getByLabelText(/Edit client/i); // replace with the actual aria-label of your edit button
@@ -61,13 +51,8 @@ describe("ClientListItem", () => {
   it("calls openDeleteModal when delete button is clicked", async () => {
     const openDeleteModalMock = jest.fn();
 
-    render(
-      <MemoryRouter>
-        <ClientListItem
-          openDeleteModal={openDeleteModalMock}
-          client={clientPF}
-        />
-      </MemoryRouter>
+    renderWithRouter(
+      <ClientListItem openDeleteModal={openDeleteModalMock} client={clientPF} />
     );
 
     const deleteButton = screen.getByLabelText(`Delete client ${clientPF.id}`);
