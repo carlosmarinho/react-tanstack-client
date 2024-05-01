@@ -3,6 +3,7 @@ import {
   checkBasicClientFields,
   checkButtonBar,
   checkCompanyClientFields,
+  checkPersonClientFields,
   renderWithProviders,
   selectClientTipo,
 } from "../../../../test/testUtil";
@@ -20,7 +21,7 @@ describe("AddClient", () => {
   it("should render correctly when selecting 'PF' tipo", async () => {
     await selectClientTipo("PF");
 
-    checkBasicClientFields();
+    checkPersonClientFields();
     checkButtonBar();
   });
 
