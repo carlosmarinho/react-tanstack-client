@@ -1,4 +1,23 @@
-import { TypeClient } from "../types/clientSchema";
+import { TypeClient, TypePF, TypePJ } from "../types/clientSchema";
+
+export const clientPF: TypePF = {
+  tipo: "PF",
+  email: "testpf@example.com",
+  ddd: "11",
+  telefone: "955516234",
+  nome: "Test Person",
+  cpf: "92511930021",
+};
+
+export const clientPJ: TypePJ = {
+  tipo: "PJ",
+  email: "testpj@example.com",
+  ddd: "11",
+  telefone: "922251234",
+  nomeFantasia: "Test Company",
+  razaoSocial: "Test Company Ltda",
+  cnpj: "85359859000144",
+};
 
 export const mockClients: TypeClient[] = [
   {

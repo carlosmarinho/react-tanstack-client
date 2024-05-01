@@ -8,26 +8,7 @@ import {
 } from "../../../../test/testUtil";
 import { screen } from "@testing-library/react";
 import { CLIENT_STRINGS } from "../../strings";
-import { TypePF, TypePJ } from "../../../../types/clientSchema";
-
-const clientPF: TypePF = {
-  tipo: "PF",
-  email: "testpf@example.com",
-  ddd: "11",
-  telefone: "955516234",
-  nome: "Test Person",
-  cpf: "92511930021",
-};
-
-const clientPJ: TypePJ = {
-  tipo: "PJ",
-  email: "testpj@example.com",
-  ddd: "11",
-  telefone: "922251234",
-  nomeFantasia: "Test Company",
-  razaoSocial: "Test Company Ltda",
-  cnpj: "85359859000144",
-};
+import { clientPF, clientPJ } from "../../../../mocks/clients";
 
 describe("AddClient Integration Test", () => {
   beforeEach(() => {
@@ -35,7 +16,7 @@ describe("AddClient Integration Test", () => {
     checkBasicClientFields();
   });
 
-  it("should submit the form correctly when 'PF' tipo is selected", async () => {
+  it("should add client correctly when client is type of 'PF'", async () => {
     await selectClientTipo(clientPF.tipo);
     await fillForm(clientPF); // Assuming fillForm function fills the form fields
 
@@ -47,7 +28,7 @@ describe("AddClient Integration Test", () => {
     ).toBeInTheDocument();
   });
 
-  it("should submit the form correctly when 'PJ' tipo is selected", async () => {
+  it("should add client correctly when client is type of 'PJ'", async () => {
     await selectClientTipo("PJ");
     await fillForm(clientPJ); // Assuming fillForm function fills the form fields
 
@@ -58,4 +39,8 @@ describe("AddClient Integration Test", () => {
       await screen.findByText(CLIENT_STRINGS.CREATE_SUCCESS)
     ).toBeInTheDocument();
   });
+
+  /**
+   * @todo add test with invalid data to handle errors
+   */
 });

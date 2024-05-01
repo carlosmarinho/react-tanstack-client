@@ -77,6 +77,34 @@ export async function checkClientTipo(tipo: string) {
   expect(selectEl.textContent).toBe(tipo);
 }
 
+export async function checkPFValues(client: TypePF) {
+  const nomeInput = await screen.findByRole("textbox", {
+    name: /nome/i,
+  });
+  const cpfInput = await screen.findByRole("textbox", {
+    name: /cpf/i,
+  });
+
+  expect(nomeInput).toHaveValue(client.nome);
+  expect(cpfInput).toHaveValue(client.cpf);
+}
+
+export async function checkPJValues(client: TypePJ) {
+  const nomeFantasiaInput = await screen.findByRole("textbox", {
+    name: /nome fantasia/i,
+  });
+  const razaoSocialInput = await screen.findByRole("textbox", {
+    name: /razão social/i,
+  });
+  const cnpjInput = await screen.findByRole("textbox", {
+    name: /cnpj/i,
+  });
+
+  expect(nomeFantasiaInput).toHaveValue(client.nomeFantasia);
+  expect(razaoSocialInput).toHaveValue(client.razaoSocial);
+  expect(cnpjInput).toHaveValue(client.cnpj);
+}
+
 export async function fillBasic({ email, ddd, telefone }: TypeBasicClient) {
   const emailInput = await screen.findByRole("textbox", {
     name: /email/i,

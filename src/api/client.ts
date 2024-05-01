@@ -16,7 +16,7 @@ export const submitEditClient = async (data: TypeClient, id: number) => {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
   } catch (error) {
-    console.error("Validation error:", error);
+    console.log("Validation error:", error);
   }
 
   return { id };
@@ -37,7 +37,7 @@ export const submitAddClient = async (data: unknown) => {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
   } catch (error) {
-    console.error("Validation error:", error);
+    console.log("Validation error:", error);
   }
 };
 

@@ -18,7 +18,7 @@ export const handlers = [
 
     // I need to add this validation cause id in params can also be an array and typescrpt is complaning
     if (typeof id !== "string") {
-      console.error("Invalid id:", id);
+      console.log("Invalid id:", id);
       return new HttpResponse("Invalid ID", { status: 400 });
     }
 
@@ -39,7 +39,7 @@ export const handlers = [
         ...client,
       });
     } catch (error) {
-      console.error("Invalid client:", error);
+      console.log("Invalid client:", error);
       /**@todo returning this is not working, try to find possible solution */
       // return new HttpResponse("Invalid client data", { status: 400 });
     }
@@ -51,7 +51,7 @@ export const handlers = [
 
     // I need to add this validation cause id in params can also be an array and typescrpt is complaning
     if (typeof id !== "string") {
-      console.error("Invalid id:", id);
+      console.log("Invalid id:", id);
       return new HttpResponse("Invalid ID", { status: 400 });
     }
 
@@ -64,7 +64,7 @@ export const handlers = [
       ClientSchema.parse(client);
       clientMap.set(id, client);
     } catch (error) {
-      console.error("Invalid client:", error);
+      console.log("Invalid client:", error);
       /**@todo returning this is not working, try to find possible solution, for this reason I'll keep only the console.log */
       // return new HttpResponse('Invalid client data', { status: 400 });
     }
@@ -75,7 +75,7 @@ export const handlers = [
     const { id } = params;
     // I need to add this validation cause id in params can also be an array and typescrpt is complaning
     if (typeof id !== "string") {
-      console.error("Invalid id:", id);
+      console.log("Invalid id:", id);
       return new HttpResponse("Invalid ID", { status: 400 });
     }
 

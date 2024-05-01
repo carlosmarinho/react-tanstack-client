@@ -32,7 +32,7 @@ export function gnerateFakeClientsToSessionStorage(): TypeClient[] {
       clientMap.set(client.id!.toString(), client);
     } catch (error) {
       const zodError = error as Error;
-      console.error(`Vaaalidation error for client ${client.id}:`, zodError);
+      console.log(`Vaaalidation error for client ${client.id}:`, zodError);
     }
   });
 
@@ -54,7 +54,7 @@ export function getClientsFromSessionStorage(): TypeClient[] {
 
 export function clientMapHasId(id: string) {
   if (!clientMap.has(id)) {
-    console.error("Client not found:", id);
+    console.log("Client not found:", id);
     return false;
   }
   return true;
