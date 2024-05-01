@@ -1,6 +1,7 @@
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import ClientForm from "../ClientForm";
 import { BrowserRouter as Router } from "react-router-dom";
+import { checkField } from "../../../../test/testUtil";
 
 describe("ClientForm", () => {
   it("should render correctly", () => {
@@ -17,13 +18,8 @@ describe("ClientForm", () => {
       </Router>
     );
 
-    expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
-    expect(screen.getByRole("textbox", { name: /email/i })).toBeInTheDocument();
-    expect(screen.getByLabelText(/ddd/i)).toBeInTheDocument();
-    expect(screen.getByRole("textbox", { name: /ddd/i })).toBeInTheDocument();
-    expect(screen.getByLabelText(/telefone/i)).toBeInTheDocument();
-    expect(
-      screen.getByRole("textbox", { name: /telefone/i })
-    ).toBeInTheDocument();
+    checkField("email", "textbox");
+    checkField("ddd", "textbox");
+    checkField("telefone", "textbox");
   });
 });
