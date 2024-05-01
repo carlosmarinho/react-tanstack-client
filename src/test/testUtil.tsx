@@ -2,6 +2,13 @@ import { render, screen, within } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { MemoryRouter as Router } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
+import { CLIENT_STRINGS } from "../components/clients/strings";
+import {
+  TypeBasicClient,
+  TypeClient,
+  TypePF,
+  TypePJ,
+} from "../types/clientSchema";
 
 export function renderWithRouter(component: JSX.Element) {
   render(<Router>{component}</Router>);
@@ -68,4 +75,79 @@ export async function checkClientTipo(tipo: string) {
   )) as HTMLDivElement;
 
   expect(selectEl.textContent).toBe(tipo);
+}
+
+export async function fillBasic({ email, ddd, telefone }: TypeBasicClient) {
+  const emailInput = await screen.findByRole("textbox", {
+    name: /email/i,
+  });
+
+  const dddInput = await screen.findByRole("textbox", {
+    name: /ddd/i,
+  });
+
+  const telefoneInput = await screen.findByRole("textbox", {
+    name: /telefone/i,
+  });
+
+  await userEvent.clear(emailInput);
+  await userEvent.type(emailInput, email);
+  expect(emailInput).toHaveValue(email);
+
+  await userEvent.clear(dddInput);
+  await userEvent.type(dddInput, ddd);
+  expect(dddInput).toHaveValue(ddd);
+
+  await userEvent.clear(telefoneInput);
+  await userEvent.type(telefoneInput, telefone);
+  expect(telefoneInput).toHaveValue(telefone);
+}
+
+export async function fillPF(client: TypePF) {
+  const nomeInput = await screen.findByRole("textbox", {
+    name: /nome/i,
+  });
+
+  const cpfInput = await screen.findByRole("textbox", {
+    name: /cpf/i,
+  });
+
+  await userEvent.type(nomeInput, client.nome);
+  await userEvent.type(cpfInput, client.cpf);
+}
+
+export async function fillPJ(client: TypePJ) {
+  const nomeFantasiaInput = await screen.findByRole("textbox", {
+    name: /nome fantasia/i,
+  });
+  const razaoSocialInput = await screen.findByRole("textbox", {
+    name: /razão social/i,
+  });
+  const cnpjInput = await screen.findByRole("textbox", {
+    name: /cnpj/i,
+  });
+
+  await userEvent.type(nomeFantasiaInput, client.nomeFantasia);
+  await userEvent.type(razaoSocialInput, client.razaoSocial);
+  await userEvent.type(cnpjInput, client.cnpj);
+}
+
+export async function fillForm(client: TypeClient) {
+  await fillBasic({
+    tipo: client.tipo,
+    email: client.email,
+    ddd: client.ddd,
+    telefone: client.telefone,
+  });
+
+  if (client.tipo === "PF") {
+    await fillPF(client);
+  } else {
+    await fillPJ(client);
+  }
+}
+
+export async function submitForm() {
+  const submitButton = screen.getByText(CLIENT_STRINGS.SUBMIT);
+  await userEvent.click(submitButton);
 }

@@ -1,7 +1,13 @@
 import EditClient from "../EditClient";
 import {
   checkClientTipo,
+  // checkBasicClientFields,
+  // checkBasicClientFields,
+  // checkButtonBar,
+  // checkCompanyClientFields,
+  // checkPersonClientFields,
   renderWithProviders,
+  // selectClientTipo,
 } from "../../../../test/testUtil";
 import { fetchClient, submitEditClient } from "../../../../api/client";
 
@@ -9,6 +15,7 @@ import { mockClients } from "../../../../mocks/clients";
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { CLIENT_STRINGS } from "../../strings";
+// import { CLIENT_STRINGS } from "../../strings";
 
 jest.mock("../../../../api/client", () => ({
   fetchClient: jest.fn(),

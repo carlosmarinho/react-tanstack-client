@@ -119,7 +119,6 @@ const ClientForm: React.FC<ClientFormProps> = ({
 
       {tipo === "PJ" && <CompanyClientForm errors={errors} control={control} />}
 
-      <p>{client?.email}</p>
       <BasicClientForm errors={errors} control={control} />
       <Box sx={{ display: "flex", justifyContent: "center", gap: "20px" }}>
         <Button onClick={handleBack} variant="contained">
