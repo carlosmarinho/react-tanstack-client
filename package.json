@@ -1,6 +1,6 @@
 {
   "name": "beyond-brpartners",
-  "private": true,
+  "private": false,
   "version": "1.0.2.",
   "type": "module",
   "homepage": "https://carlosmarinho.github.io/react-tanstack-client",
