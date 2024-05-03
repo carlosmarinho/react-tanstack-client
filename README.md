@@ -112,6 +112,7 @@ While I have substantial experience with Redux and GraphQL client, I've also spe
   "test:watch": "jest --watch",
   "test:coverage": "jest --coverage"
 }
+```
 
 ### Future Improvements
 
@@ -126,4 +127,7 @@ While I have substantial experience with Redux and GraphQL client, I've also spe
 - Enhance the existing layout for improved user experience.
 - Introduce different layout options to cater to various user preferences.
 - Implement a user registration and login system for personalized experiences.
+
+```
+
 ```
